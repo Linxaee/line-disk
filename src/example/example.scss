@@ -1,0 +1,34 @@
+// for循环
+@for $i from 1 through 3 {
+	.item#{$i} {
+		@include square(20px);
+		margin: 10px;
+		background-color: pink;
+	}
+}
+// include
+.container {
+	@include flex-center(row);
+}
+
+// extend
+.father {
+	color: yellow;
+	font-size: 18px;
+}
+.son {
+	@extend .father;
+	font-weight: bold;
+}
+
+// 父选择器
+a {
+	font-weight: bold;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+	body.firefox & {
+		font-weight: normal;
+	}
+}

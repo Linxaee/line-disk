@@ -13,7 +13,15 @@ module.exports = {
 		{ value: "🚬init", name: "🚬init:       模块初始化" },
 		{ value: "🛠️ utils", name: "🛠️ utils:       添加工具" },
 	],
-	scopes: [{ name: "layout" }, { name: "router" }, { name: "store" }, { name: "api" }, { name: "utils" }],
+	scopes: [
+		{ name: "layout" },
+		{ name: "router" },
+		{ name: "store" },
+		{ name: "api" },
+		{ name: "utils" },
+		{ name: "global" },
+		{ name: "example" },
+	],
 	// it needs to match the value for field type. Eg.: 'fix'
 	/*  scopeOverrides: {
     fix: [
