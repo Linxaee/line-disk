@@ -31,4 +31,11 @@ export default defineConfig({
 			dirs: path.resolve(__dirname, "src/directives"),
 		},
 	},
+	css: {
+		preprocessorOptions: {
+			scss: {
+				additionalData: '@import "@/global/scss/global.scss";',
+			},
+		},
+	},
 });
