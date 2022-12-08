@@ -3,15 +3,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
+	{ path: "/", redirect: "/main" },
 	{
-		path: "/home",
-		name: "home",
-		component: () => import("@/views/home.vue"),
-	},
-	{
-		path: "/test",
-		name: "test",
-		component: () => import("@/views/test.vue"),
+		path: "/main",
+		name: "main",
+		component: () => import("@/layout/index.vue"),
 	},
 ];
 
