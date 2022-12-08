@@ -11,8 +11,9 @@ module.exports = {
 		{ value: "🔧chore", name: "🔧chore:      开发工具变动(构建、脚手架工具等)" },
 		{ value: "⏪rollback", name: "⏪rollback:   代码回退" },
 		{ value: "🚬init", name: "🚬init:       模块初始化" },
+		{ value: "🛠️utils", name: "🛠️init:       添加工具" },
 	],
-	scopes: [{ name: "layout" }, { name: "router" }, { name: "store" }, { name: "request" }],
+	scopes: [{ name: "layout" }, { name: "router" }, { name: "store" }, { name: "request" }, { name: "utils" }],
 	// it needs to match the value for field type. Eg.: 'fix'
 	/*  scopeOverrides: {
     fix: [
@@ -35,7 +36,7 @@ module.exports = {
 		confirmCommit: "确定提交说明?",
 	},
 	allowCustomScopes: true,
-	allowBreakingChanges: ["特性", "修复"],
+	allowBreakingChanges: ["feature", "fix"],
 	// limit subject length
 	subjectLimit: 100,
 };

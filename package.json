@@ -2,7 +2,7 @@
 	"name": "line-disk",
 	"private": true,
 	"version": "0.0.0",
-	"type": "commonjs",
+	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc && vite build",
