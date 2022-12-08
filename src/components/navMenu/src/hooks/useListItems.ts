@@ -1,31 +1,36 @@
-import { ref } from "vue";
-import router from "@/router";
-import { menuItem } from "../types";
-import localCache from "@/utils/localCache";
-export function useListItems(emit: any, menuItems: menuItem[]) {
-	// 当前激活的index
-	const activeIndex = ref(0);
+import { ref, watch } from "vue";
 
+import router from "@/router";
+import { useRoute } from "vue-router";
+
+import { menuItem } from "../types";
+import { pathMapToMenu } from "@/utils";
+
+export function useListItems(emit: any, menuItems: menuItem[]) {
+	// 当前激活的menu
+	const activeMenu = ref<menuItem>(menuItems[0]);
+	// 路由对象
+	const route = useRoute();
+
+	// 传入待激活菜单对象
 	const handleMenuChange = (item: menuItem) => {
-		// 切换激活index
-		activeIndex.value = item.id;
-		// 存入local
-		localCache.setCache("activeIndex", activeIndex.value);
+		// 切换激活菜单
+		activeMenu.value = pathMapToMenu(menuItems, item.path);
 		// 发送菜单改变事件
 		emit("menuChange", item);
 		// 路由跳转
 		router.push(item.path);
 	};
 
-	const initMenu = () => {
-		// 获取激活index
-		activeIndex.value = parseInt(localCache.getCache("activeIndex") ?? "1") ?? 1;
-		// 获取激活item
-		const activeItem = menuItems.find(item => item.id === activeIndex.value);
-		// 发送菜单改变事件
-		emit("menuChange", activeItem);
-		// 路由跳转
-		router.push(activeItem!.path);
-	};
-	return { activeIndex, handleMenuChange, initMenu };
+	// 监听路由路径,保证刷新后菜单在对应的路由
+	watch(
+		() => route.path,
+		newPath => {
+			activeMenu.value = pathMapToMenu(menuItems, newPath);
+		},
+		{
+			immediate: true,
+		}
+	);
+	return { activeMenu, handleMenuChange };
 }

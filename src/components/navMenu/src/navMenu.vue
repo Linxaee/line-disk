@@ -13,7 +13,7 @@
 				<template v-for="item in menuItems" :key="item.id">
 					<li
 						class="menuItem"
-						:class="activeIndex === item.id ? 'activeItem' : ''"
+						:class="activeMenu.id === item.id ? 'activeItem' : ''"
 						@click="handleMenuChange(item)"
 					>
 						<span class="iconContainer">
@@ -38,14 +38,13 @@ import { useListItems } from "./hooks/useListItems";
 
 const menuItems = menuConfig.menuItems;
 
+// 对外发送事件
+// menuChange: 激活菜单改变时
 const emit = defineEmits<{
 	(event: "menuChange", item: menuItem): void;
 }>();
 
-const { activeIndex, handleMenuChange, initMenu } = useListItems(emit, menuItems);
-
-// 初始化菜单
-initMenu();
+const { activeMenu, handleMenuChange } = useListItems(emit, menuItems);
 </script>
 
 <style lang="scss" scoped>

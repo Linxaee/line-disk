@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
-	{ path: "/", redirect: "/driver" },
+	{ path: "/", redirect: "/driver/document" },
 	{
 		path: "/driver",
 		name: "driver",
