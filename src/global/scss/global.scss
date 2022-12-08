@@ -3,7 +3,7 @@
 	height: $sideLen;
 }
 
-@mixin flex-center($dir) {
+@mixin flexCenter($dir) {
 	display: flex;
 	flex-direction: $dir;
 	justify-content: center;
