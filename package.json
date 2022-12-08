@@ -12,6 +12,7 @@
 		"commit": "git-cz"
 	},
 	"dependencies": {
+		"@element-plus/icons-vue": "^2.0.10",
 		"@types/node": "^18.11.11",
 		"axios": "^1.2.1",
 		"element-plus": "^2.2.26",
