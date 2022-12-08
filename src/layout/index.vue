@@ -1,15 +1,15 @@
 <template>
 	<div class="main">
-		<el-container class="main-content">
-			<el-aside :width="isCollapse ? '60px' : '210px'">
+		<el-container class="mainContent">
+			<el-aside>
 				<nav-menu :collapse="isCollapse" />
 			</el-aside>
 			<el-container class="page">
-				<el-header class="page-header">
+				<el-header class="pageHeader">
 					<nav-header @foldChange="handleFoldChange" />
 				</el-header>
-				<el-main class="page-content">
-					<div class="page-info"><router-view></router-view></div>
+				<el-main class="pageContent">
+					<router-view></router-view>
 				</el-main>
 			</el-container>
 		</el-container>
@@ -36,12 +36,12 @@ const handleFoldChange = (isFold: boolean) => {
 	height: 100%;
 }
 
-.main-content,
+.mainContent,
 .page {
 	height: 100%;
 }
 
-.page-content {
+.pageContent {
 	height: calc(100% - 48px);
 }
 .page-info {
@@ -60,17 +60,15 @@ const handleFoldChange = (isFold: boolean) => {
 }
 
 .el-aside {
-	width: 240px;
 	overflow-x: hidden;
 	overflow-y: auto;
-	line-height: 200px;
 	text-align: left;
 	cursor: pointer;
 	background-color: rgb(245, 245, 246);
-	transition: width 0.3s linear;
+	transition: width 0.3s ease-in;
 	scrollbar-width: none; /* firefox */
 	-ms-overflow-style: none; /* IE 10+ */
-
+	width: var(--el-aside-width);
 	&::-webkit-scrollbar {
 		display: none;
 	}
