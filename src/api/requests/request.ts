@@ -78,7 +78,7 @@ class Request {
 		});
 	}
 	get<T>(url: string, config?: LinReqConfig<T>) {
-		this.request({ ...config, method: "GET", url });
+		return this.request({ ...config, method: "GET", url });
 	}
 	post<T>(url: string, config?: LinReqConfig<T>) {
 		return this.request<T>({ ...config, method: "POST", url });
