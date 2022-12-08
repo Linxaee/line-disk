@@ -1,7 +1,7 @@
 module.exports = {
 	types: [
 		{ value: "✨feature", name: "✨feature:    一个新的特性" },
-		{ value: "🖥️UI", name: "🖥️UI           UI更新" },
+		{ value: "🖥️ UI", name: "🖥️ UI           UI更新" },
 		{ value: "🐛fix", name: "🐛fix         修复一个Bug" },
 		{ value: "📝docs", name: "📝docs:       变更的只有文档" },
 		{ value: "💄style", name: "💄style:      空格, 分号等格式修复" },
@@ -11,7 +11,7 @@ module.exports = {
 		{ value: "🔧chore", name: "🔧chore:      开发工具变动(构建、脚手架工具等)" },
 		{ value: "⏪rollback", name: "⏪rollback:   代码回退" },
 		{ value: "🚬init", name: "🚬init:       模块初始化" },
-		{ value: "🛠️utils", name: "🛠️init:       添加工具" },
+		{ value: "🛠️ utils", name: "🛠️ utils:       添加工具" },
 	],
 	scopes: [{ name: "layout" }, { name: "router" }, { name: "store" }, { name: "request" }, { name: "utils" }],
 	// it needs to match the value for field type. Eg.: 'fix'

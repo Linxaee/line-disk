@@ -2,7 +2,7 @@
 	"name": "line-disk",
 	"private": true,
 	"version": "0.0.0",
-	"type": "module",
+	"type": "commonjs",
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc && vite build",
@@ -13,6 +13,7 @@
 	},
 	"dependencies": {
 		"@types/node": "^18.11.11",
+		"axios": "^1.2.1",
 		"pinia": "^2.0.27",
 		"vue": "^3.2.41",
 		"vue-router": "4"

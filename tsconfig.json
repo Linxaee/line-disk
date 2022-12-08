@@ -9,10 +9,12 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
 		"lib": ["ESNext", "DOM"],
 		"skipLibCheck": true,
 		"noEmit": true,
-		"baseUrl": "./",
+		"baseUrl": ".",
 		"paths": {
 			"@/*": ["src/*"]
 		}
