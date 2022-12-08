@@ -10,11 +10,11 @@
 			</div>
 			<!-- 顶部菜单 -->
 			<ul class="topMenu">
-				<template v-for="item in menuConfig.menuItems" :key="item.id">
+				<template v-for="item in menuItems" :key="item.id">
 					<li
 						class="menuItem"
 						:class="activeIndex === item.id ? 'activeItem' : ''"
-						@click="handleClick(item)"
+						@click="handleMenuChange(item)"
 					>
 						<span class="iconContainer">
 							<el-icon class="icon"> <component :is="item.icon"></component></el-icon>
@@ -32,11 +32,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { menuConfig } from "./config/menuConfig";
+import { menuItem } from "./types";
 import { useListItems } from "./hooks/useListItems";
 
-const { activeIndex, handleClick } = useListItems();
+const menuItems = menuConfig.menuItems;
+
+const emit = defineEmits<{
+	(event: "menuChange", item: menuItem): void;
+}>();
+
+const { activeIndex, handleMenuChange, initMenu } = useListItems(emit, menuItems);
+
+// 初始化菜单
+initMenu();
 </script>
 
 <style lang="scss" scoped>

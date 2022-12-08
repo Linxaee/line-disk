@@ -3,7 +3,7 @@ class LocalCache {
 		window.localStorage.setItem(key, value);
 	}
 	getCache(key: string) {
-		window.localStorage.get(key);
+		return window.localStorage.getItem(key);
 	}
 	deleteCache(key: string) {
 		window.localStorage.removeItem(key);

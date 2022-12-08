@@ -37,6 +37,7 @@ module.exports = defineConfig({
 		"@typescript-eslint/ban-types": "off", // 禁止使用特定类型
 		"@typescript-eslint/no-non-null-assertion": "off", // '!'不允许使用后缀运算符的非空断言
 		"@typescript-eslint/explicit-module-boundary-types": "off", // 需要导出函数和类的公共类方法的显式返回和参数类型
+		"vue/v-on-event-hyphenation": "off",
 		// "@typescript-eslint/no-unused-vars": [
 		// 	"error",
 		// 	{

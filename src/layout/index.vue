@@ -2,7 +2,7 @@
 	<div class="main">
 		<el-container class="mainContent">
 			<el-aside>
-				<nav-menu :collapse="isCollapse" />
+				<NavMenu :collapse="isCollapse" @menuChange="handleMenuChange" />
 			</el-aside>
 			<el-container class="page">
 				<el-header class="pageHeader">
@@ -20,10 +20,15 @@
 import { ref } from "vue";
 import NavMenu from "@/components/navMenu";
 import NavHeader from "@/components/navHeader";
+import { menuItem } from "../components/navMenu/src/types/index";
 
 const isCollapse = ref(false);
 const handleFoldChange = (isFold: boolean) => {
 	isCollapse.value = isFold;
+};
+
+const handleMenuChange = (item: menuItem) => {
+	console.log(item);
 };
 </script>
 
