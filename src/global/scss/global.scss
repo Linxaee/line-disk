@@ -2,3 +2,10 @@
 	width: $sideLen;
 	height: $sideLen;
 }
+
+@mixin flex-center($dir) {
+	display: flex;
+	flex-direction: $dir;
+	justify-content: center;
+	align-items: center;
+}
