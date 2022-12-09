@@ -6,22 +6,22 @@ import { menuItem, subMenuItem } from "@/components/navMenu";
  * @param curPath 当前的路径
  * @returns 匹配到的菜单对象
  */
-export function pathMapToMenu(navMenu: any, curPath: string): any {
-	let activeMenu = null;
-	let activeSubMenu = null;
-	function _recurseGetMenu(curMenu: any, curPath: any) {
+export function pathMapToMenu(navMenu: menuItem[], curPath: string): any {
+	let activeMenu: menuItem | null = null;
+	let activeSubMenu: subMenuItem | null = null;
+	function _recurseGetMenu(curMenu: menuItem[] | subMenuItem[], curPath: string) {
 		for (const menu of curMenu) {
 			if (menu.path === curPath) {
 				if (menu.type == 1) {
-					activeMenu = menu;
+					activeMenu = menu as menuItem;
 				} else {
-					activeSubMenu = menu;
+					activeSubMenu = menu as subMenuItem;
 					const newPath = curPath.split("/").slice(0, 3).join("/");
 					_recurseGetMenu(navMenu, newPath);
 				}
 			}
-			if (menu.children) {
-				_recurseGetMenu(menu.children, curPath);
+			if ((menu as menuItem).children) {
+				_recurseGetMenu((menu as menuItem).children!, curPath);
 			}
 		}
 	}
