@@ -1,5 +1,9 @@
 $deActiveColor: rgb(174, 174, 176);
 $activeColor: black;
+
+$activeBgColor: rgb(227, 227, 230);
+$hoverBgColor: rgb(236, 236, 238);
+
 @mixin square($sideLen) {
 	width: $sideLen;
 	height: $sideLen;
