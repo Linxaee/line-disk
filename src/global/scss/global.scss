@@ -1,3 +1,5 @@
+$deActiveColor: rgb(174, 174, 176);
+$activeColor: black;
 @mixin square($sideLen) {
 	width: $sideLen;
 	height: $sideLen;
@@ -8,4 +10,11 @@
 	flex-direction: $dir;
 	justify-content: center;
 	align-items: center;
+}
+
+@mixin fontSW($size, $weight) {
+	font: {
+		size: $size;
+		weight: $weight;
+	}
 }
