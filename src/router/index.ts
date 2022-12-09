@@ -28,6 +28,18 @@ const routes: RouteRecordRaw[] = [
 				path: "recycleBin",
 				name: "recycleBin",
 				component: () => import("@/views/recycleBin/recycleBin.vue"),
+				children: [
+					{
+						path: "document",
+						name: "subDocument",
+						component: () => import("@/views/recycleBin/subDocument/subDocument.vue"),
+					},
+					{
+						path: "album",
+						name: "subAlbum",
+						component: () => import("@/views/recycleBin/subAlbum/subAlbum.vue"),
+					},
+				],
 			},
 		],
 	},

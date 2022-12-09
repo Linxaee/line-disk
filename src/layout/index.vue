@@ -6,7 +6,7 @@
 			</el-aside>
 			<el-container class="page">
 				<el-header class="pageHeader">
-					<nav-header @foldChange="handleFoldChange" />
+					<nav-header :activeMenu="activeMenu" />
 				</el-header>
 				<el-main class="pageContent">
 					<router-view></router-view>
@@ -18,17 +18,32 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+
 import NavMenu from "@/components/navMenu";
 import NavHeader from "@/components/navHeader";
-import { menuItem } from "../components/navMenu/src/types/index";
 
+import { menuItem } from "@/components/navMenu/src/types/index";
+
+import appStore from "@/store";
+import { storeToRefs } from "pinia";
+
+// 当前激活的菜单
+const navMenuStore = appStore.navMenuStore;
+const { activeMenu } = storeToRefs(navMenuStore);
+// navMenu是否折叠
 const isCollapse = ref(false);
-const handleFoldChange = (isFold: boolean) => {
-	isCollapse.value = isFold;
-};
 
+// const handleFoldChange = (isFold: boolean) => {
+// 	isCollapse.value = isFold;
+// };
+
+/**
+ *  @function 接受到menuChange事件后的回调函数
+ *  @param item 现激活的菜单对象
+ */
 const handleMenuChange = (item: menuItem) => {
-	console.log(item);
+	//修改navHeader
+	activeMenu.value = item;
 };
 </script>
 
@@ -61,7 +76,7 @@ const handleMenuChange = (item: menuItem) => {
 }
 
 .el-header {
-	height: 48px !important;
+	height: 100px !important;
 }
 
 .el-aside {

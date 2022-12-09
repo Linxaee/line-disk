@@ -34,22 +34,21 @@
 <script setup lang="ts">
 import { menuConfig } from "./config/menuConfig";
 import { menuItem } from "./types";
-import { useListItems } from "./hooks/useListItems";
+import { useWatchRoute } from "./hooks/useWatchRoute";
 
 const menuItems = menuConfig.menuItems;
 
-// 对外发送事件
-// menuChange: 激活菜单改变时
+/**
+ * @emits menuChange: 激活菜单改变
+ */
 const emit = defineEmits<{
 	(event: "menuChange", item: menuItem): void;
 }>();
 
-const { activeMenu, handleMenuChange } = useListItems(emit, menuItems);
+const { activeMenu, handleMenuChange } = useWatchRoute(menuItems, emit);
 </script>
 
 <style lang="scss" scoped>
-$activeColor: rgb(227, 227, 230);
-$hoverColor: rgb(236, 236, 238);
 .navMenu {
 	width: 240px;
 	// 顶部logo
@@ -58,16 +57,15 @@ $hoverColor: rgb(236, 236, 238);
 		.logo {
 			@include flexCenter(row);
 			width: 100%;
+
 			margin-left: -25px;
-			padding: 10px;
+			padding: 0 10px;
 			img {
 				@include square(100px);
 			}
 			.title {
-				font: {
-					size: 26px;
-					weight: 600;
-				}
+				@include fontSW(26px, 600);
+
 				margin-left: -15px;
 			}
 		}
@@ -76,31 +74,37 @@ $hoverColor: rgb(236, 236, 238);
 	.topMenu {
 		@include flexCenter(column);
 		.menuItem {
-			position: relative;
 			display: flex;
 			justify-content: flex-start;
 			align-items: center;
-			padding: 12px 30px;
+
+			position: relative;
 
 			width: 216px;
+
+			padding: 12px 30px;
+
 			border-radius: 10px;
+
 			transition: all 0.2s linear;
 			.icon {
 				font-size: 26px;
+
 				margin-right: 16px;
 				margin-top: 2px;
 			}
 			.title {
 				font-size: 110%;
+
 				margin-bottom: 2px;
 			}
 			&:hover {
-				background-color: $hoverColor;
+				background-color: $hoverBgColor;
 			}
 		}
 	}
 }
 .activeItem {
-	background-color: $activeColor;
+	background-color: $activeBgColor;
 }
 </style>
