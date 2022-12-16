@@ -24,6 +24,13 @@ export const menuConfig: IMenuConfig = {
 		},
 		{
 			id: 4,
+			title: "传输中",
+			icon: "Upload",
+			path: "/driver/uploading",
+			type: 1,
+		},
+		{
+			id: 5,
 			title: "回收站",
 			icon: "Delete",
 			path: "/driver/recycleBin",

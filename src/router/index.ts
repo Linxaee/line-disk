@@ -25,8 +25,14 @@ const routes: RouteRecordRaw[] = [
 				component: () => import("@/views/starred/starred.vue"),
 			},
 			{
+				path: "uploading",
+				name: "uploading",
+				component: () => import("@/views/uploading/uploading.vue"),
+			},
+			{
 				path: "recycleBin",
 				name: "recycleBin",
+				redirect: "/driver/recycleBin/document",
 				component: () => import("@/views/recycleBin/recycleBin.vue"),
 				children: [
 					{
