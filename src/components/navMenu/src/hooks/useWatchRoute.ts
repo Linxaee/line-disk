@@ -5,16 +5,16 @@ import { useRoute } from "vue-router";
 import { menuItem } from "@/components/navMenu";
 import { pathMapToMenu } from "@/utils";
 
-import { useNavMenuStore } from "@/store/navMenu";
-import { useNavHeaderStore } from "@/store/navHeader";
+import appStore from "@/store";
 import { storeToRefs } from "pinia";
 import router from "@/router";
 
 export function useWatchRoute(menuItems: menuItem[], emit?: any) {
-	const navMenuStore = useNavMenuStore();
-	const navHeaderStore = useNavHeaderStore();
+	const navMenuStore = appStore.navMenuStore;
+	const navHeaderStore = appStore.navHeaderStore;
 	// 第一个菜单项/当前激活的菜单项
 	const { firstMenu, activeMenu } = storeToRefs(navMenuStore);
+
 	// 路由对象
 	const route = useRoute();
 

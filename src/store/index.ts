@@ -1,5 +1,12 @@
+import { createPinia } from "pinia";
+// 持久化插件
+import piniaPluginPersist from "pinia-plugin-persist";
+
 import { useNavHeaderStore } from "./navHeader";
 import { useNavMenuStore } from "./navMenu";
+
+export const pinia = createPinia();
+pinia.use(piniaPluginPersist);
 
 export interface IAppStore {
 	navHeaderStore: ReturnType<typeof useNavHeaderStore>;

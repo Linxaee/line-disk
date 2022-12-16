@@ -6,7 +6,7 @@ export function useRecycle() {
 	function initPage() {
 		const menuItems = menuConfig.menuItems;
 		const navHeaderStore = useNavHeaderStore();
-		const curMenu = menuItems[3].children![0];
+		const curMenu = menuItems[4].children![0];
 		if (navHeaderStore.activeSubMenu === null) {
 			navHeaderStore.changeActiveSubMenu(curMenu);
 			router.push(curMenu.path);
