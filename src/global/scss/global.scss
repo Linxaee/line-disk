@@ -8,7 +8,11 @@ $hoverBgColor: rgb(236, 236, 238);
 	width: $sideLen;
 	height: $sideLen;
 }
-
+@mixin circle($radius) {
+	width: $radius;
+	height: $radius;
+	border-radius: 50%;
+}
 @mixin flexCenter($dir) {
 	display: flex;
 	flex-direction: $dir;
