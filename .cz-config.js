@@ -20,6 +20,7 @@ module.exports = {
 		{ name: "api" },
 		{ name: "utils" },
 		{ name: "global" },
+		{ name: "directives" },
 		{ name: "example" },
 	],
 	// it needs to match the value for field type. Eg.: 'fix'
