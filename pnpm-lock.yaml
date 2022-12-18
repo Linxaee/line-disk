@@ -13,6 +13,7 @@ specifiers:
   commitlint-config-cz: ^0.13.3
   cz-conventional-changelog: ^3.3.0
   cz-customizable: ^7.0.0
+  dayjs: ^1.11.7
   element-plus: ^2.2.26
   eslint: ^8.29.0
   eslint-config-prettier: ^8.5.0
@@ -40,6 +41,7 @@ dependencies:
   '@element-plus/icons-vue': registry.npmmirror.com/@element-plus/icons-vue/2.0.10_vue@3.2.45
   '@types/node': registry.npmmirror.com/@types/node/18.11.11
   axios: registry.npmmirror.com/axios/1.2.1
+  dayjs: registry.npmmirror.com/dayjs/1.11.7
   element-plus: registry.npmmirror.com/element-plus/2.2.26_vue@3.2.45
   normalize.css: registry.npmmirror.com/normalize.css/8.0.1
   pinia: registry.npmmirror.com/pinia/2.0.27_mgnvym7yiazkylwwogi5r767ue

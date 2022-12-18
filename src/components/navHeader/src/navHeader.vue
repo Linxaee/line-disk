@@ -13,7 +13,23 @@
 				</template>
 			</ul>
 		</div>
-		<div class="actions"></div>
+		<ul class="actions">
+			<li class="search">
+				<span class="icon">
+					<el-icon :size="24">
+						<Search />
+					</el-icon>
+				</span>
+			</li>
+			<li class="uploadNew">
+				<span class="icon">
+					<el-icon :size="20" color="white">
+						<Upload />
+					</el-icon>
+				</span>
+			</li>
+			<!-- <li class="clear"></li> -->
+		</ul>
 	</header>
 </template>
 
@@ -23,8 +39,9 @@ import { menuItem, subMenuItem } from "@/components/navMenu";
 import router from "@/router";
 
 import appStore from "@/store";
+import { Search, Upload } from "@element-plus/icons-vue";
 import { storeToRefs } from "pinia";
-// 路由对象
+
 const navHeaderStore = appStore.navHeaderStore;
 const { activeSubMenu } = storeToRefs(navHeaderStore);
 
@@ -44,7 +61,10 @@ const handleSubMenuChange = (activeSubMenu: subMenuItem) => {
 
 <style lang="scss" scoped>
 .navHeader {
-	padding: 0 30px;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0 20px;
 	.pageTitle {
 		@include flexCenter(row);
 		.title {
@@ -80,7 +100,36 @@ const handleSubMenuChange = (activeSubMenu: subMenuItem) => {
 			}
 		}
 	}
+	.actions {
+		@include flexCenter(row);
+		li {
+			min-width: 32px;
+			margin: 5px;
+			&:nth-child(1),
+			&:nth-child(2) {
+				@include circle(32px);
+				.icon {
+					@include flexCenter(row);
+					height: 32px;
+					cursor: pointer;
+				}
+			}
+			&:nth-child(1) {
+				background-color: transparent;
+				&:hover {
+					background: $hoverBgColor;
+				}
+			}
+			&:nth-child(2) {
+				background: linear-gradient(129.12deg, #446dff 0%, rgba(99, 125, 255, 0.75) 100%);
+				&:hover {
+					background: linear-gradient(129.12deg, #365bde 0%, #526efa 100%);
+				}
+			}
+		}
+	}
 }
+
 .active {
 	color: $activeColor !important;
 	background-color: $activeBgColor;

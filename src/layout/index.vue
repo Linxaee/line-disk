@@ -6,7 +6,7 @@
 			</el-aside>
 			<el-container class="page">
 				<el-header class="pageHeader">
-					<nav-header :activeMenu="activeMenu" />
+					<NavHeader :activeMenu="activeMenu" />
 				</el-header>
 				<el-main class="pageContent">
 					<router-view></router-view>
@@ -98,5 +98,6 @@ const handleMenuChange = (item: menuItem) => {
 	color: #333;
 	text-align: center;
 	background-color: #f0f2f5;
+	padding: 0;
 }
 </style>
