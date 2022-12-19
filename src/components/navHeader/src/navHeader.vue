@@ -22,11 +22,12 @@
 				</span>
 			</li>
 			<li class="uploadNew">
-				<span class="icon">
-					<el-icon :size="20" color="white">
-						<Upload />
-					</el-icon>
-				</span>
+				<LinDropDown :dropDownConfig="dropDownConfig"
+					><span class="icon">
+						<el-icon :size="20" color="white">
+							<Upload />
+						</el-icon> </span
+				></LinDropDown>
 			</li>
 			<!-- <li class="clear"></li> -->
 		</ul>
@@ -34,10 +35,13 @@
 </template>
 
 <script setup lang="ts">
+import LinDropDown from "@/components/linDropDown";
+
 import { menuItem, subMenuItem } from "@/components/navMenu";
 
-import router from "@/router";
+import { dropDownConfig } from "./config/dropDowm.config";
 
+import router from "@/router";
 import appStore from "@/store";
 import { Search, Upload } from "@element-plus/icons-vue";
 import { storeToRefs } from "pinia";
