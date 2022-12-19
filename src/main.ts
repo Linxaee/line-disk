@@ -7,6 +7,7 @@ import { pinia } from "@/store";
 
 import "normalize.css";
 import "@/assets/scss/init.scss";
+import "animate.css";
 
 import { globalRegister } from "@/global";
 
