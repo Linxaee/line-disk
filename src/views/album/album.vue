@@ -1,5 +1,7 @@
 <template>
-	<div class="album">album</div>
+	<div class="album">
+		<el-table></el-table>
+	</div>
 </template>
 
 <script setup lang="ts"></script>

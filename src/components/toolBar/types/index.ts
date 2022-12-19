@@ -1,4 +1,5 @@
-export type effectType = "dark" | "light";
+type effectType = "dark" | "light";
+type clickCb = (item: toolBarItem) => void;
 /**
  * @interface 图标上方气泡的配置项类型接口
  * @link https://element-plus.gitee.io/zh-CN/component/tooltip.html#%E5%B1%9E%E6%80%A7
@@ -44,5 +45,13 @@ export interface toolBarItem {
 	/**
 	 * @desc 图标上方气泡的配置项
 	 */
-	tooltipConfig: tooltipConfig;
+	tooltipConfig?: tooltipConfig;
+	/**
+	 * @desc 点击的回调函数
+	 */
+	clickCallBack?: clickCb;
+}
+export interface IToolBarConfig {
+	toolBarItems: toolBarItem[];
+	style?: any;
 }

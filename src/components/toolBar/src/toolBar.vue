@@ -1,7 +1,7 @@
 <template>
-	<div class="toolBar">
+	<div class="toolBar" :style="toolBarConfig.style">
 		<div class="toolBarWrapper">
-			<template v-for="item in toolBarConfig" :key="item.icon">
+			<template v-for="item in toolBarConfig.toolBarItems" :key="item.icon">
 				<el-tooltip
 					v-bind="item.tooltipConfig"
 					:content="item.tooltipConfig?.content ?? '示例'"
@@ -10,7 +10,7 @@
 					:hide-after="item.tooltipConfig?.hideAfter ?? 10"
 					:show-after="item.tooltipConfig?.showAfter ?? 100"
 				>
-					<div class="toolBarItem">
+					<div class="toolBarItem" @click="item.clickCallBack?.(item)">
 						<el-icon :color="item.color ?? 'white'" :size="item.size ?? 18">
 							<component :is="item.icon"></component>
 						</el-icon>
@@ -22,8 +22,17 @@
 </template>
 
 <script setup lang="ts">
-import { toolBarItem } from "../types/index";
-const props = defineProps<{ toolBarConfig: toolBarItem[] }>();
+import { toolBarItem, IToolBarConfig } from "../types/index";
+
+const props = defineProps<{ toolBarConfig: IToolBarConfig }>();
+
+const emit = defineEmits<{
+	(e: "toolBarItemClick", item: toolBarItem): void;
+}>();
+
+const handleItemClick = (item: toolBarItem) => {
+	emit("toolBarItemClick", item);
+};
 </script>
 
 <style lang="scss" scoped>

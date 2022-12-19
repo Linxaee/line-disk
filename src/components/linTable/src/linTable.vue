@@ -23,7 +23,6 @@
 									<span class="name">{{ scope.row[item.prop] }}</span>
 								</div>
 							</template>
-
 							<span v-else>{{ scope.row[item.prop] ?? "" }}</span>
 						</slot>
 					</template>
@@ -34,10 +33,12 @@
 </template>
 
 <script setup lang="ts">
-import { toRaw } from "vue";
+import { ref, toRaw } from "vue";
 import { ColumnItem } from "../types";
 import { fileIconMap } from "@/global/map/fileIconMap";
 import { LinFileItem } from "@/api/requests/types";
+
+const multipleTableRef = ref();
 /**
  * @desc 从fileIconMap去除后缀映射的路径
  */
@@ -73,6 +74,17 @@ const handleSelectionChange = (files: LinFileItem[]) => {
 		files.map(file => toRaw(file))
 	);
 };
+/**
+ * @desc 清除所有选项的函数
+ */
+const clearSelection = () => {
+	multipleTableRef.value!.clearSelection();
+};
+
+/**
+ * @desc 对外暴露ElTable上的实例方法
+ */
+defineExpose({ clearSelection });
 </script>
 
 <style lang="scss" scoped>

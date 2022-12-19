@@ -50,8 +50,14 @@ export const useDocumentStore = defineStore("document", () => {
 	 */
 	const selectedFileList = ref<LinFileItem[]>([]);
 
+	/**
+	 * @desc 保存elForm上的clearSelection方法
+	 */
+	const clearSelectedFileList = () => {};
+
 	return {
 		displayedFileList,
 		selectedFileList,
+		clearSelectedFileList,
 	};
 });

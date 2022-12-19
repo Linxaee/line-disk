@@ -1,6 +1,7 @@
 <template>
 	<div class="document">
 		<LinTable
+			ref="linTableRef"
 			:tableData="tableData"
 			:columnConfig="columnConfig"
 			:tableConfig="tableConfig"
@@ -13,7 +14,6 @@
 				}}</span>
 			</template>
 		</LinTable>
-
 		<transition
 			name="animate__animated animate__bounce animate__delay"
 			enter-active-class="animate__fadeInUp"
@@ -40,9 +40,17 @@ import { LinFileItem } from "@/api/requests/types";
 
 import appStore from "@/store";
 
+import { ref, onMounted } from "vue";
+
+const linTableRef = ref<InstanceType<typeof LinTable>>();
+
 const documentStore = appStore.documentStore;
 const tableData = documentStore.displayedFileList;
 
+// mounted时ref才有值，才能进行赋值
+onMounted(() => {
+	documentStore.clearSelectedFileList = linTableRef.value?.clearSelection as any;
+});
 /**
  * @desc 选择数组改变后储存到store中
  */
