@@ -15,6 +15,7 @@ module.exports = {
 	],
 	scopes: [
 		{ name: "layout" },
+		{ name: "component" },
 		{ name: "router" },
 		{ name: "store" },
 		{ name: "api" },
