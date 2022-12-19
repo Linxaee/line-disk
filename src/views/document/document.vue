@@ -44,13 +44,17 @@ import { ref, onMounted } from "vue";
 
 const linTableRef = ref<InstanceType<typeof LinTable>>();
 
+// 取出documentStore
 const documentStore = appStore.documentStore;
+// 表格数据来源
 const tableData = documentStore.displayedFileList;
 
 // mounted时ref才有值，才能进行赋值
 onMounted(() => {
+	// 将linTable上的清除选项方法存入store中
 	documentStore.clearSelectedFileList = linTableRef.value?.clearSelection as any;
 });
+
 /**
  * @desc 选择数组改变后储存到store中
  */
