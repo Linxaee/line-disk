@@ -10,3 +10,5 @@ export function globalRegister(app: App): void {
 	// 全局注册store
 	registerStore();
 }
+// 无操作
+export const NOOP = () => {};

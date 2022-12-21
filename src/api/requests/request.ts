@@ -27,19 +27,19 @@ class Request {
 
 		// 所有实例的请求拦截器
 		this.instance.interceptors.request.use(
-			config => {
+			(config) => {
 				return config;
 			},
-			err => {
+			(err) => {
 				return err;
 			}
 		);
 		// 所有实例的响应拦截器
 		this.instance?.interceptors.response.use(
-			res => {
+			(res) => {
 				return res;
 			},
-			err => {
+			(err) => {
 				return err;
 			}
 		);
@@ -61,7 +61,7 @@ class Request {
 
 			// 以config配置发起请求
 			this.instance.request<any, T>(config).then(
-				res => {
+				(res) => {
 					if (config.interceptors?.resInterceptor) {
 						// 取出单次请求传入响应的拦截器
 						const resInterceptor = config.interceptors?.resInterceptor;
@@ -71,7 +71,7 @@ class Request {
 					}
 					resolve(res);
 				},
-				err => {
+				(err) => {
 					reject(err);
 				}
 			);

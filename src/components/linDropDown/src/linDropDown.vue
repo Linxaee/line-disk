@@ -11,18 +11,21 @@
 				<el-dropdown-menu>
 					<template v-for="item in dropDownConfig.dropDownItemList" :key="item.icon">
 						<div class="dropDownItemWrapper">
+							<!-- 每组分割项 -->
 							<span
 								v-if="item.type === 2"
 								class="dropDownTitle"
 								:style="item.attrs?.style ?? ''"
 								>{{ item.context }}</span
 							>
-							<el-dropdown-item
-								v-else-if="item.type === 1"
-								:icon="item.icon"
-								:disabled="item.disabled"
-								:divided="item.divided"
-								>{{ item.context }}</el-dropdown-item
+							<!-- 实际菜单项 -->
+							<LinUpload v-else-if="item.type === 1"
+								><el-dropdown-item
+									:icon="item.icon"
+									:disabled="item.disabled"
+									:divided="item.divided"
+									>{{ item.context }}</el-dropdown-item
+								></LinUpload
 							>
 						</div>
 						<!-- 分组标题 -->
@@ -34,8 +37,9 @@
 </template>
 
 <script setup lang="ts">
+import LinUpload from "@/components/linUpload";
 import { IDropDownConfig } from "../types/index";
-const props = withDefaults(defineProps<{ dropDownConfig: IDropDownConfig }>(), {
+withDefaults(defineProps<{ dropDownConfig: IDropDownConfig }>(), {
 	dropDownConfig: () => ({
 		trigger: "click",
 		size: "default",
@@ -62,7 +66,7 @@ const props = withDefaults(defineProps<{ dropDownConfig: IDropDownConfig }>(), {
 	outline: 0;
 }
 // 覆盖本身的hover样式
-::v-deep .el-dropdown-menu__item:not(.is-disabled) {
+:deep(.el-dropdown-menu__item:not(.is-disabled)) {
 	transition: 0.2s all linear;
 	line-height: 26px;
 	padding: 5px 16px;

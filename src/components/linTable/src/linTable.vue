@@ -71,7 +71,7 @@ const emit = defineEmits<{
 const handleSelectionChange = (files: LinFileItem[]) => {
 	emit(
 		"selectionChange",
-		files.map(file => toRaw(file))
+		files.map((file) => toRaw(file))
 	);
 };
 /**

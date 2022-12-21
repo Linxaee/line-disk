@@ -29,7 +29,7 @@ export function useWatchRoute(menuItems: menuItem[], emit?: any) {
 	// 监听路由路径,保证刷新后菜单在对应的路由
 	watch(
 		() => route.path,
-		newPath => {
+		(newPath) => {
 			// 根据路径获取激活的菜单和二级菜单
 			const { activeMenu, activeSubMenu } = pathMapToMenu(menuItems, newPath);
 			navMenuStore.changeActiveMenu(activeMenu);

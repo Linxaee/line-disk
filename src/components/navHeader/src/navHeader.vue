@@ -109,6 +109,7 @@ const handleSubMenuChange = (activeSubMenu: subMenuItem) => {
 		li {
 			min-width: 32px;
 			margin: 5px;
+			transition: 0.2s all linear;
 			&:nth-child(1),
 			&:nth-child(2) {
 				@include circle(32px);
