@@ -56,7 +56,7 @@ onMounted(() => {
 });
 
 /**
- * @desc 选择数组改变后储存到store中
+ * @description 选择数组改变后储存到store中
  */
 const handleSelectionChange = (files: LinFileItem[]) => {
 	documentStore.selectedFileList = files;

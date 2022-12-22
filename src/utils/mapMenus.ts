@@ -1,7 +1,7 @@
 import { menuItem, subMenuItem } from "@/components/navMenu";
 
 /**
- * @desc 给出当前路径，获取当前路径对应的菜单对象
+ * @description 给出当前路径，获取当前路径对应的菜单对象
  * @param userMenu 全部的菜单对象
  * @param curPath 当前的路径
  * @returns 匹配到的菜单对象

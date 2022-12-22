@@ -1,10 +1,15 @@
 import { InferDefaults } from "@/utils";
-import { UploadCallBacks, UploadFile, UploadFiles, UploadRawFile } from "../types";
+import { UploadCallBacks, UploadFile, UploadFiles } from "../types";
 import { AxiosProgressEvent } from "axios";
 import { NOOP } from "@/global";
+// 文件id
 let fileId = 1;
+// 生成文件id
 export const getFileId = () => Date.now() + fileId++;
 
+/**
+ * @interface 基础props
+ */
 export interface UploadBaseProps {
 	url?: string;
 	method?: string;
@@ -14,6 +19,9 @@ export interface UploadBaseProps {
 	cut?: boolean;
 	headers?: Record<string, any>;
 }
+/**
+ * @description 基础props的默认值
+ */
 export const UploadBasePropsDefault: InferDefaults<UploadBaseProps> = {
 	url: "#",
 	method: "post",
@@ -24,6 +32,9 @@ export const UploadBasePropsDefault: InferDefaults<UploadBaseProps> = {
 	headers: () => ({ "Content-Type": "application/x-www-form-urlencoded" }),
 };
 
+/**
+ * @interface 传入upload组件的props类型接口
+ */
 export interface UploadProps extends UploadBaseProps {
 	onExceed?: UploadCallBacks["onExceed"];
 	onProgress?: (
@@ -34,6 +45,10 @@ export interface UploadProps extends UploadBaseProps {
 	onSuccess?: (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => unknown;
 	onError?: (err: Error, uploadFile: UploadFile, uploadFiles: UploadFiles) => void;
 }
+
+/**
+ * @description 传入upload组件的props的默认值
+ */
 export const UploadPropsDefault: InferDefaults<UploadProps> = {
 	...UploadBasePropsDefault,
 	onExceed: () => NOOP,

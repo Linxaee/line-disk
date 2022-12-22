@@ -41,17 +41,17 @@ const tableData: LinFileItem[] = [
 ];
 export const useDocumentStore = defineStore("document", () => {
 	/**
-	 * @desc 当前展示的文件列表
+	 * @description 当前展示的文件列表
 	 * @TODO 从后端获取真实数据(服务端还没写)(做无限加载)                                                                                                                                  )
 	 */
 	const displayedFileList = ref(tableData);
 	/**
-	 * @desc 选中的文件数组
+	 * @description 选中的文件数组
 	 */
 	const selectedFileList = ref<LinFileItem[]>([]);
 
 	/**
-	 * @desc 保存elForm上的clearSelection方法
+	 * @description 保存elForm上的clearSelection方法
 	 */
 	const clearSelectedFileList = () => {};
 

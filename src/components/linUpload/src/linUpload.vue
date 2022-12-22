@@ -14,6 +14,7 @@ import { UploadContentProps, UploadContentInstance } from "./linUploadContent";
 import { useUploadHandler } from "../hooks/useUploadHandler";
 import { UploadCallBacks, UploadFile, UploadFiles } from "../types";
 import { AxiosProgressEvent } from "axios";
+
 const props = withDefaults(
 	defineProps<{
 		url?: string;

@@ -2,7 +2,7 @@ import appStore from "@/store";
 export function useToolBarClick() {
 	const documentStore = appStore.documentStore;
 	/**
-	 * @desc 清除多选
+	 * @description 清除多选
 	 */
 	const handleCancelSelect = () => {
 		documentStore.selectedFileList = [];

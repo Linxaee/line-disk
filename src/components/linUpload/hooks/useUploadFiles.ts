@@ -6,7 +6,7 @@ import { AxiosRequestConfig } from "axios";
 import { ref, shallowRef } from "vue";
 const requests = shallowRef<Record<string, XMLHttpRequest | Promise<unknown>>>({});
 /**
- * @desc 默认单片大小
+ * @description 默认单片大小
  */
 const DEFAULT_SIZE = 100 * 1024;
 // const changeBuffer = (rawFile: UploadRawFile) => {
@@ -34,7 +34,7 @@ const DEFAULT_SIZE = 100 * 1024;
 export function useFileUpload(props: UploadContentProps) {
 	let { url, method, headers, onSuccess, onError, onExceed, onProgress } = props;
 	/**
-	 * @desc 直接上传文件不进行切片
+	 * @description 直接上传文件不进行切片
 	 * @param rawFile 原始文件
 	 * @returns void
 	 */

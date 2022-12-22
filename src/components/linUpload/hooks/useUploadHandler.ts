@@ -20,19 +20,29 @@ export function useUploadHandler(
 		return uploadFiles.value.find((file) => file.uid === rawFile.uid);
 	};
 
-	const handleStart: UploadContentProps["onStart"] = (file) => {
-		file.uid = getFileId();
+	/**
+	 * @description 文件验证完毕可以上传后传入该函数初始化，并加入uploadFiles
+	 * @param file 传入的源文件
+	 */
+	const handleStart: UploadContentProps["onStart"] = (rawFile) => {
+		rawFile.uid = getFileId();
 		const uploadFile: UploadFile = {
-			name: file.name,
+			name: rawFile.name,
 			percentage: 0,
 			status: "ready",
-			size: file.size,
-			raw: file,
-			uid: file.uid,
+			size: rawFile.size,
+			raw: rawFile,
+			uid: rawFile.uid,
 		};
 		uploadFiles.value.push(uploadFile);
 	};
 
+	/**
+	 * @description 文件上传过程中的回调函数，会回调自定义传入的onProgress函数
+	 * @param evt axios上传过程中事件类型
+	 * @param rawFile 源文件
+	 * @returns
+	 */
 	const handleProgress: UploadContentProps["onProgress"] = (evt, rawFile) => {
 		const file = getFile(rawFile!);
 
@@ -43,6 +53,13 @@ export function useUploadHandler(
 		// console.log(`file:${file.uid}:进行了${file.percentage}%`);
 		props.onProgress!(evt, file, uploadFiles.value);
 	};
+
+	/**
+	 * @description 文件上传成功后的回调函数，会回调自定义传入的onSuccess函数
+	 * @param response axios成功后的response
+	 * @param rawFile 源文件
+	 * @returns
+	 */
 	const handleSuccess: UploadContentProps["onSuccess"] = (response, rawFile) => {
 		const file = getFile(rawFile);
 		if (!file) return;
@@ -52,6 +69,13 @@ export function useUploadHandler(
 		props.onSuccess!(response, file, uploadFiles.value);
 		// props.onChange(file, uploadFiles.value);
 	};
+
+	/**
+	 * @description 文件上传失败后的回调函数，会回调自定义传入的onError函数
+	 * @param err axios失败后的error
+	 * @param rawFile 源文件
+	 * @returns
+	 */
 	const handleError: UploadContentProps["onError"] = (err, rawFile) => {
 		const file = getFile(rawFile);
 		if (!file) return;

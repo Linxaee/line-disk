@@ -19,15 +19,15 @@ export type placementType =
 	| "left-end";
 export interface dropDownItem {
 	/**
-	 * @desc ep中的图标
+	 * @description ep中的图标
 	 */
 	icon: string;
 	/**
-	 * @desc 是否禁用
+	 * @description 是否禁用
 	 */
 	disabled?: boolean;
 	/**
-	 * @desc 是否展示分割线
+	 * @description 是否展示分割线
 	 */
 	divided?: boolean;
 	/**
@@ -45,19 +45,19 @@ export interface dropDownItem {
 }
 export interface IDropDownConfig {
 	/**
-	 * @desc 触发方式
+	 * @description 触发方式
 	 */
 	trigger?: triggerType;
 	/**
-	 * @desc 大小
+	 * @description 大小
 	 */
 	size?: sizeType;
 	/**
-	 * @desc 挂载位置
+	 * @description 挂载位置
 	 */
 	placement?: placementType;
 	/**
-	 * @desc 菜单项数组
+	 * @description 菜单项数组
 	 */
 	dropDownItemList: dropDownItem[];
 }

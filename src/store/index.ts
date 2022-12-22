@@ -18,7 +18,7 @@ export interface IAppStore {
 const appStore: IAppStore = {} as IAppStore;
 
 /**
- * @desc 注册app状态库，store总入口
+ * @description 注册app状态库，store总入口
  */
 export const registerStore = () => {
 	appStore.navHeaderStore = useNavHeaderStore();

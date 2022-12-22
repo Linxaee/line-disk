@@ -19,7 +19,7 @@ export function useWatchRoute(menuItems: menuItem[], emit?: any) {
 	const route = useRoute();
 
 	/**
-	 * @desc 切换至待激活菜单对象对应的路由路由
+	 * @description 切换至待激活菜单对象对应的路由路由
 	 * @param item 待激活菜单对象
 	 */
 	const handleMenuChange = (item: menuItem) => {

@@ -38,7 +38,7 @@ const isCollapse = ref(false);
 // };
 
 /**
- *  @desc 接受到menuChange事件后的回调函数
+ *  @description 接受到menuChange事件后的回调函数
  *  @param item 现激活的菜单对象
  */
 const handleMenuChange = (item: menuItem) => {

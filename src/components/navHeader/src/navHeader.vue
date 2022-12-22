@@ -54,7 +54,7 @@ defineProps<{
 }>();
 
 /**
- * @desc 切换激活的二级菜单
+ * @description 切换激活的二级菜单
  * @param activeSubMenu 激活的二级菜单
  */
 const handleSubMenuChange = (activeSubMenu: subMenuItem) => {

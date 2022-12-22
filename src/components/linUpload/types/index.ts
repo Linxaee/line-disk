@@ -2,17 +2,14 @@ import { AxiosProgressEvent } from "axios";
 export type UploadStatus = "ready" | "uploading" | "success" | "fail";
 export type UploadFiles = UploadFile[];
 /**
- * @interface 源文件接口，继承自File，新增uid作为标识
+ * @interface 源文件接口，继承自File，新增uid作为唯一标识
  */
 export interface UploadRawFile extends File {
 	uid: number;
 }
 /**
- * @interface 上传进度事件接口，继承自AxiosProgressEvent，新增percent进度标识
+ * @interface 自定义上传文件类型接口
  */
-// export interface UploadProgressEvent extends AxiosProgressEvent {
-// 	percent: number;
-// }
 export interface UploadFile {
 	name: string;
 	percentage?: number;
@@ -24,7 +21,7 @@ export interface UploadFile {
 	raw?: UploadRawFile;
 }
 /**
- * @interface 上传过程中钩子回调函数接口
+ * @interface 传入uploadContent的回调函数类型接口
  */
 export interface UploadCallBacks {
 	onExceed: (files: File[]) => void;

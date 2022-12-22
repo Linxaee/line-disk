@@ -19,23 +19,23 @@ type fileType = 1 | 2;
  */
 export interface LinFileItem {
 	/**
-	 * @desc 文件名
+	 * @description 文件名
 	 */
 	fileName: string;
 	/**
-	 * @desc 文件类型
+	 * @description 文件类型
 	 */
 	type: fileType;
 	/**
-	 * @desc 文件大小
+	 * @description 文件大小
 	 */
 	fileSize: string | number;
 	/**
-	 * @desc 创建时间
+	 * @description 创建时间
 	 */
 	createTime: string;
 	/**
-	 * @desc 文件后缀
+	 * @description 文件后缀
 	 */
 	suffix: string;
 }

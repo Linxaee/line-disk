@@ -40,7 +40,7 @@ import { LinFileItem } from "@/api/requests/types";
 
 const multipleTableRef = ref();
 /**
- * @desc 从fileIconMap去除后缀映射的路径
+ * @description 从fileIconMap去除后缀映射的路径
  */
 const transferImgUrl = (suffix: keyof typeof fileIconMap) => {
 	return fileIconMap[suffix];
@@ -66,7 +66,7 @@ const emit = defineEmits<{
 }>();
 
 /**
- * @desc 发送被选择数组改变事件
+ * @description 发送被选择数组改变事件
  */
 const handleSelectionChange = (files: LinFileItem[]) => {
 	emit(
@@ -75,14 +75,14 @@ const handleSelectionChange = (files: LinFileItem[]) => {
 	);
 };
 /**
- * @desc 清除所有选项的函数
+ * @description 清除所有选项的函数
  */
 const clearSelection = () => {
 	multipleTableRef.value!.clearSelection();
 };
 
 /**
- * @desc 对外暴露ElTable上的实例方法
+ * @description 对外暴露ElTable上的实例方法
  */
 defineExpose({ clearSelection });
 </script>

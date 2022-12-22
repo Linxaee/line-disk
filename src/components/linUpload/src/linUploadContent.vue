@@ -18,7 +18,7 @@ import { ref } from "vue";
 import { UploadCallBacks, UploadRawFile } from "../types/index";
 import { getFileId } from "./linUpload";
 import { useFileUpload } from "../hooks/useUploadFiles";
-import { UploadContentProps, UploadContentPropsDefault } from "./linUploadContent";
+import { UploadContentPropsDefault } from "./linUploadContent";
 const props = withDefaults(
 	defineProps<{
 		url?: string;
