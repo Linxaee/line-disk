@@ -37,7 +37,7 @@ class Request {
 		// 所有实例的响应拦截器
 		this.instance?.interceptors.response.use(
 			(res) => {
-				return res;
+				return res.data;
 			},
 			(err) => {
 				return err;

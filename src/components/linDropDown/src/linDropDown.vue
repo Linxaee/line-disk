@@ -19,7 +19,11 @@
 								>{{ item.context }}</span
 							>
 							<!-- 实际菜单项 -->
-							<LinUpload v-else-if="item.type === 1"
+							<LinUpload
+								v-else-if="item.type === 1"
+								:limit="10"
+								:cut="false"
+								url="/files/uploadSingle"
 								><el-dropdown-item
 									:icon="item.icon"
 									:disabled="item.disabled"

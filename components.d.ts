@@ -22,6 +22,8 @@ declare module '@vue/runtime-core' {
     LinDropDown: typeof import('./src/components/linDropDown/src/linDropDown.vue')['default']
     LinTable: typeof import('./src/components/linTable/src/linTable.vue')['default']
     LinUpload: typeof import('./src/components/linUpload/src/linUpload.vue')['default']
+    LinUpload2: typeof import('./src/components/linUpload/src/linUpload2.vue')['default']
+    LinUploadContent: typeof import('./src/components/linUpload/src/linUploadContent.vue')['default']
     NavHeader: typeof import('./src/components/navHeader/src/navHeader.vue')['default']
     NavMenu: typeof import('./src/components/navMenu/src/navMenu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
