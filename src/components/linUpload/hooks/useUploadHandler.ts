@@ -2,23 +2,26 @@ import { useVModel } from "@vueuse/core";
 import { UploadFile, UploadFiles, UploadRawFile } from "../types";
 import { UploadContentProps, UploadContentInstance } from "../src/linUploadContent";
 import { getFileId, UploadProps } from "../src/linUpload";
-import { AxiosProgressEvent } from "axios";
-import { Ref, ShallowRef, ref } from "vue";
+import { ShallowRef, ref } from "vue";
 export function useUploadHandler(
 	props: UploadProps,
 	uploadRef: ShallowRef<UploadContentInstance | undefined>
 ) {
+	/**
+	 * @todo 完善uploadFiles为双向绑定
+	 */
+
 	// const uploadFiles = useVModel(
 	// 	props as Omit<UploadProps, "fileList"> & { fileList: UploadFiles },
 	// 	"fileList",
 	// 	undefined,
 	// 	{ passive: true }
 	// );
-	const uploadFiles: Ref<UploadFiles> = ref([]);
 
-	const getFile = (rawFile: UploadRawFile) => {
-		return uploadFiles.value.find((file) => file.uid === rawFile.uid);
-	};
+	const uploadFiles = ref<UploadFiles>([]);
+
+	const getFile = (rawFile: UploadRawFile) =>
+		uploadFiles.value.find((file) => file.uid === rawFile.uid);
 
 	/**
 	 * @description 文件验证完毕可以上传后传入该函数初始化，并加入uploadFiles
@@ -34,7 +37,10 @@ export function useUploadHandler(
 			raw: rawFile,
 			uid: rawFile.uid,
 		};
+		console.log(uploadFiles.value);
 		uploadFiles.value.push(uploadFile);
+
+		props.onStart!(uploadFile);
 	};
 
 	/**

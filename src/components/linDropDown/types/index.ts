@@ -1,3 +1,4 @@
+import { UploadProps } from "@/components/linUpload/src/linUpload";
 export type triggerType = "hover" | "click" | "contextmenu";
 export type sizeType = "large" | "default" | "small";
 export type itemType = 1 | 2;
@@ -31,15 +32,25 @@ export interface dropDownItem {
 	 */
 	divided?: boolean;
 	/**
-	 * 展示的文字内容
+	 * @description 展示的文字内容
 	 */
 	context: string;
 	/**
-	 * 该项的类型，1为普通项，2为标题分割项
+	 * @description 该项的类型，1为普通项，2为标题分割项
 	 */
 	type: itemType;
+
 	/**
-	 * 其它属性，style等
+	 * @description 是否启用upload
+	 */
+	uploaded?: boolean;
+	/**
+	 * @description upload组件的选项
+	 */
+	uploadConfig?: UploadProps;
+
+	/**
+	 * @description 其它属性，style等
 	 */
 	attrs?: any;
 }

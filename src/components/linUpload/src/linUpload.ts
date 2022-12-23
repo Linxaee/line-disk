@@ -2,6 +2,8 @@ import { InferDefaults } from "@/utils";
 import { UploadCallBacks, UploadFile, UploadFiles } from "../types";
 import { AxiosProgressEvent } from "axios";
 import { NOOP } from "@/global";
+import { Store } from "pinia";
+import { Ref } from "vue";
 // 文件id
 let fileId = 1;
 // 生成文件id
@@ -37,6 +39,7 @@ export const UploadBasePropsDefault: InferDefaults<UploadBaseProps> = {
  */
 export interface UploadProps extends UploadBaseProps {
 	onExceed?: UploadCallBacks["onExceed"];
+	onStart?: (file: UploadFile) => void;
 	onProgress?: (
 		evt: AxiosProgressEvent,
 		uploadFile: UploadFile,
@@ -51,6 +54,7 @@ export interface UploadProps extends UploadBaseProps {
  */
 export const UploadPropsDefault: InferDefaults<UploadProps> = {
 	...UploadBasePropsDefault,
+	onStart: () => NOOP,
 	onExceed: () => NOOP,
 	onProgress: () => NOOP,
 	onSuccess: () => NOOP,

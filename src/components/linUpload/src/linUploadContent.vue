@@ -28,6 +28,7 @@ const props = withDefaults(
 		limit?: number;
 		cut?: boolean;
 		headers?: Record<string, any>;
+
 		onExceed?: UploadCallBacks["onExceed"];
 		onStart?: UploadCallBacks["onStart"];
 		onProgress?: UploadCallBacks["onProgress"];
@@ -83,11 +84,13 @@ const uploadFiles = (files: File[]) => {
 };
 
 const upload = async (rawFile: UploadRawFile) => {
+	console.log("上传了");
+
 	const { cut } = props;
 	// console.log(url);
 	if (!cut) {
 		const data = await uploadSingle(rawFile);
-		// console.log(data);
+		console.log(data);
 	}
 };
 </script>

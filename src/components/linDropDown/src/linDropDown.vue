@@ -18,18 +18,25 @@
 								:style="item.attrs?.style ?? ''"
 								>{{ item.context }}</span
 							>
-							<!-- 实际菜单项 -->
+
+							<!-- 实际菜单项（启用上传） -->
 							<LinUpload
-								v-else-if="item.type === 1"
-								:limit="10"
-								:cut="false"
-								url="/files/uploadSingle"
+								v-else-if="item.type === 1 && item.uploaded"
+								v-bind="item.uploadConfig"
 								><el-dropdown-item
 									:icon="item.icon"
 									:disabled="item.disabled"
 									:divided="item.divided"
 									>{{ item.context }}</el-dropdown-item
 								></LinUpload
+							>
+							<!-- 实际菜单项（不启用上传） -->
+							<el-dropdown-item
+								v-else-if="item.type === 1"
+								:icon="item.icon"
+								:disabled="item.disabled"
+								:divided="item.divided"
+								>{{ item.context }}</el-dropdown-item
 							>
 						</div>
 						<!-- 分组标题 -->
@@ -43,7 +50,7 @@
 <script setup lang="ts">
 import LinUpload from "@/components/linUpload";
 import { IDropDownConfig } from "../types/index";
-withDefaults(defineProps<{ dropDownConfig: IDropDownConfig }>(), {
+const props = withDefaults(defineProps<{ dropDownConfig: IDropDownConfig }>(), {
 	dropDownConfig: () => ({
 		trigger: "click",
 		size: "default",

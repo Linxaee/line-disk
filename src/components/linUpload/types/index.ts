@@ -25,7 +25,7 @@ export interface UploadFile {
  */
 export interface UploadCallBacks {
 	onExceed: (files: File[]) => void;
-	onStart: (file: UploadRawFile) => void;
+	onStart: (uploadFile: UploadRawFile) => void;
 	onProgress?: (evt: AxiosProgressEvent, uploadFile: UploadRawFile) => void;
 	onSuccess: (response: any, uploadFile: UploadRawFile) => void;
 	onError: (error: Error, uploadFile: UploadRawFile) => void;

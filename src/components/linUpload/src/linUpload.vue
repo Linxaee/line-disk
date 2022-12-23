@@ -25,6 +25,7 @@ const props = withDefaults(
 		cut?: boolean;
 		headers?: Record<string, any>;
 		onExceed?: UploadCallBacks["onExceed"];
+		onStart?: (file: UploadFile) => void;
 		onProgress?: (
 			evt: AxiosProgressEvent,
 			uploadFile: UploadFile,
@@ -46,7 +47,7 @@ const { uploadFiles, handleStart, handleError, handleSuccess, handleProgress } =
 
 const uploadContentProps = computed<UploadContentProps>(() => ({
 	...props,
-	fileList: uploadFiles.value,
+	fileList: uploadFiles,
 	onStart: handleStart,
 	onProgress: handleProgress,
 	onSuccess: handleSuccess,

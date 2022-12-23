@@ -69,7 +69,7 @@ export function useFileUpload(props: UploadContentProps) {
 			const request = LinRequest.request(option);
 			requests.value[uid] = request;
 			if (request instanceof Promise) {
-				request.then(onFulfilled, onRejected);
+				return request.then(onFulfilled, onRejected);
 			}
 		} catch (err) {
 			return Promise.reject(err);
