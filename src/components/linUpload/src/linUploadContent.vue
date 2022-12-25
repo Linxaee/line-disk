@@ -64,7 +64,7 @@ const uploadFiles = (files: File[]) => {
 	// 限制上传个数
 	const { limit, multiple, onExceed, onStart } = props;
 	if (limit && files.length > limit) {
-		// onExceed(files);
+		onExceed!(files);
 		return;
 	}
 
@@ -79,13 +79,9 @@ const uploadFiles = (files: File[]) => {
 		onStart!(rawFile);
 		upload(rawFile);
 	}
-
-	// onReady(files);
 };
 
 const upload = async (rawFile: UploadRawFile) => {
-	console.log("上传了");
-
 	const { cut } = props;
 	// console.log(url);
 	if (!cut) {

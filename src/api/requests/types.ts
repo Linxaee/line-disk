@@ -34,8 +34,4 @@ export interface LinFileItem {
 	 * @description 创建时间
 	 */
 	createTime: string;
-	/**
-	 * @description 文件后缀
-	 */
-	suffix: string;
 }

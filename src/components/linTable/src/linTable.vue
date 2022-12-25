@@ -18,7 +18,15 @@
 							<template v-if="item.prop == 'fileName'">
 								<div class="nameContainer">
 									<span class="icon">
-										<img :src="transferImgUrl(scope.row.suffix)" alt="" />
+										<img
+											:src="
+												fileNameToIconUrl(
+													scope.row.fileName,
+													scope.row.type
+												)
+											"
+											alt=""
+										/>
 									</span>
 									<span class="name">{{ scope.row[item.prop] }}</span>
 								</div>
@@ -35,18 +43,12 @@
 <script setup lang="ts">
 import { ref, toRaw } from "vue";
 import { ColumnItem } from "../types";
-import { fileIconMap } from "@/global/map/fileIconMap";
+import { fileNameToIconUrl } from "@/utils";
 import { LinFileItem } from "@/api/requests/types";
 
 const multipleTableRef = ref();
-/**
- * @description 从fileIconMap去除后缀映射的路径
- */
-const transferImgUrl = (suffix: keyof typeof fileIconMap) => {
-	return fileIconMap[suffix];
-};
 
-const props = withDefaults(
+withDefaults(
 	defineProps<{
 		tableData: any[];
 		// 表格有关配置
@@ -96,7 +98,7 @@ defineExpose({ clearSelection });
 	justify-content: flex-start;
 	.icon {
 		img {
-			@include square(35px);
+			@include square($listImgSize);
 		}
 	}
 	.name {
