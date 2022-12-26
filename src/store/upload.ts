@@ -12,6 +12,8 @@ const initData: Record<string, UploadingFile> = {
 		uid: 1,
 		status: "uploading",
 		isPause: false,
+		completeCount: 20,
+		uploadCount: 100,
 	},
 	"2": {
 		name: "啊啊啊.zip",
@@ -20,6 +22,8 @@ const initData: Record<string, UploadingFile> = {
 		uid: 2,
 		status: "uploading",
 		isPause: true,
+		completeCount: 20,
+		uploadCount: 100,
 	},
 };
 export const useUploadStore = defineStore("upload", () => {

@@ -1,4 +1,5 @@
 import { AxiosProgressEvent } from "axios";
+import { UploadEvent } from "../src/linUpload";
 export type UploadStatus = "ready" | "uploading" | "success" | "fail";
 export type UploadFiles = UploadFile[];
 /**
@@ -18,6 +19,9 @@ export interface UploadFile {
 	response?: unknown;
 	uid: number;
 	url?: string;
+	HASH?: string;
+	completeCount: number;
+	uploadCount: number;
 	raw?: UploadRawFile;
 }
 /**
@@ -25,8 +29,9 @@ export interface UploadFile {
  */
 export interface UploadCallBacks {
 	onExceed: (files: File[]) => void;
-	onStart: (uploadFile: UploadRawFile) => void;
-	onProgress?: (evt: AxiosProgressEvent, uploadFile: UploadRawFile) => void;
+	onBeforeHash: (uploadFile: UploadRawFile) => void;
+	onStart: (uploadFile: UploadRawFile, HASH: string) => void;
+	onProgress?: (evt: UploadEvent, uploadFile: UploadRawFile) => void;
 	onSuccess: (response: any, uploadFile: UploadRawFile) => void;
 	onError: (error: Error, uploadFile: UploadRawFile) => void;
 }

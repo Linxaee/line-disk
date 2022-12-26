@@ -4,28 +4,36 @@ import { UploadContentProps } from "../src/linUploadContent";
 import SparkMD5 from "spark-md5";
 import { AxiosRequestConfig } from "axios";
 import { ref, shallowRef } from "vue";
+import appStore from "@/store";
+import { UploadFile } from "../types/index";
+/**
+ * @TODO 添加异常处理
+ */
+
+const uploadStore = appStore.uploadStore;
+
 const requests = shallowRef<Record<string, XMLHttpRequest | Promise<unknown>>>({});
 /**
- * @description 默认单片大小
+ * @description 默认单片大小,1mb
  */
-const DEFAULT_SIZE = 100 * 1024;
+let maxSize = 1 * 1024 * 1024;
 /**
- *
+ * @description 将传入的文件转化成字节流
  * @param rawFile 要上传的文件
  * @returns
  */
 const changeBuffer = (rawFile: UploadRawFile) => {
 	return new Promise<{ buffer: any; HASH: any; suffix: any; filename: any }>((resolve) => {
-		let fileReader = new FileReader();
-		fileReader.readAsArrayBuffer(rawFile);
-		fileReader.onload = (ev) => {
-			let buffer = ev.target!.result,
+		const reader = new FileReader();
+		reader.readAsArrayBuffer(rawFile);
+		reader.onload = (ev) => {
+			let buffer = ev.target?.result,
 				spark = new SparkMD5.ArrayBuffer(),
 				HASH,
 				suffix;
-			spark.append(buffer as any);
+			spark.append(buffer as ArrayBuffer);
 			HASH = spark.end();
-			suffix = /\.([a-zA-Z0-9]+)$/.exec(rawFile.name)?.[1];
+			suffix = rawFile.name.substring(rawFile.name.lastIndexOf(".") + 1);
 			resolve({
 				buffer,
 				HASH,
@@ -56,7 +64,7 @@ export function useFileUpload(props: UploadContentProps) {
 			headers: headers,
 			data: formData,
 			onUploadProgress: (evt) => {
-				onProgress!(evt, rawFile);
+				onProgress!({ progress: evt.progress! }, rawFile);
 			},
 		};
 
@@ -81,9 +89,123 @@ export function useFileUpload(props: UploadContentProps) {
 		}
 	}
 
-	async function uploadChunk(rawFile: UploadRawFile) {
-		const { buffer, HASH, suffix, filename } = await changeBuffer(rawFile);
-		console.log(buffer, HASH, suffix, filename);
+	async function getFileHASH(rawFile: UploadRawFile) {
+		const { HASH, suffix } = await changeBuffer(rawFile);
+		return { HASH, suffix };
 	}
-	return { uploadSingle, uploadChunk };
+	async function getAlready(HASH: string, suffix: string) {
+		const option: AxiosRequestConfig = {
+			url: "/files/uploadAlready",
+			method: "get",
+			headers: headers,
+			params: {
+				HASH,
+				suffix,
+			},
+		};
+		const data = await LinRequest.request(option);
+		const { isComplete } = data as any;
+		if (isComplete) return { isComplete };
+		else {
+			return { isComplete, fileList: (data as any).fileList };
+		}
+	}
+	async function sliceFile(HASH: string, suffix: string, rawFile: UploadRawFile) {
+		const uploadFile = uploadStore.getFile(rawFile.uid);
+		// 实现文件切片处理 「固定数量 & 固定大小」
+		uploadFile.uploadCount = Math.ceil(rawFile.size / maxSize);
+		let index = 0;
+		let chunks = [];
+		if (uploadFile.uploadCount > 100) {
+			maxSize = rawFile.size / 100;
+			uploadFile.uploadCount = 100;
+		}
+		// 避免文件大小为0不切割文件，最小传一块
+		if (uploadFile.uploadCount === 0) uploadFile.uploadCount = 1;
+
+		while (index < uploadFile.uploadCount) {
+			chunks.push({
+				file: rawFile.slice(index * maxSize, (index + 1) * maxSize),
+				filename: `${HASH}_${index + 1}.${suffix}`,
+			});
+			index++;
+		}
+		return chunks;
+	}
+	async function complete(uploadFile: UploadFile, file: UploadRawFile, HASH?: string) {
+		uploadFile.completeCount++;
+		onProgress!({ progress: uploadFile.completeCount / uploadFile.uploadCount }, file);
+		if (uploadFile.completeCount < uploadFile.uploadCount) return;
+		onProgress!({ progress: 1 }, file);
+		const option: AxiosRequestConfig = {
+			url: "/files/uploadMerge",
+			method: "post",
+			headers: headers,
+			data: { count: uploadFile.completeCount, HASH },
+		};
+		const data = await LinRequest.request(option);
+		if ((data as any).code === 0) onSuccess!(data, file);
+
+		// console.log(data);
+	}
+	async function uploadChunk(
+		isComplete: boolean,
+		chunks: any,
+		already: any,
+		rawFile: UploadRawFile,
+		HASH: string
+	) {
+		// 若已存在则秒传
+		if (isComplete) {
+			onProgress!({ progress: 1 }, rawFile);
+			onSuccess!("", rawFile);
+		}
+		// 把每一个切片都上传到服务器上
+		const uploadFile = uploadStore.getFile(rawFile.uid);
+		const requests: Record<string, Promise<unknown>> = {};
+
+		chunks.forEach(async (chunk: any) => {
+			// 已经上传的无需在上传
+			if (already.length > 0 && already.includes(chunk.filename)) {
+				complete(uploadFile, rawFile, HASH);
+				return;
+			}
+			let formData = new FormData();
+			formData.append("file", chunk.file);
+			formData.append("filename", chunk.filename);
+			const option: AxiosRequestConfig = {
+				url: "/files/uploadChunks",
+				method: "post",
+				headers: headers,
+				data: formData,
+			};
+			try {
+				// 将上传chunk的请求装入数组
+				const request = LinRequest.request(option);
+				requests[chunk.filename] = request;
+				// 将chunk上传成功的回调设置为complete,失败的回调设置为onError
+				if (request instanceof Promise) {
+					return request.then(
+						() => {
+							complete(uploadFile, rawFile, HASH);
+						},
+						(err) => {
+							onError!(err, rawFile);
+						}
+					);
+				}
+				const onFulfilled = (res: any) => {
+					onSuccess!(res, rawFile);
+				};
+				const onRejected = (err: any) => {
+					onError!(err, rawFile);
+				};
+				// 全部上传成功后的回调
+				return Promise.all(Object.values(requests)).then(onFulfilled, onRejected);
+			} catch (err) {
+				return Promise.reject(err);
+			}
+		});
+	}
+	return { uploadSingle, getFileHASH, getAlready, sliceFile, uploadChunk };
 }

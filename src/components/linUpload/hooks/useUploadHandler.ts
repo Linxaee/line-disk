@@ -23,12 +23,7 @@ export function useUploadHandler(
 	const getFile = (rawFile: UploadRawFile) =>
 		uploadFiles.value.find((file) => file.uid === rawFile.uid);
 
-	/**
-	 * @description 文件验证完毕可以上传后传入该函数初始化，并加入uploadFiles
-	 * @param file 传入的源文件
-	 */
-	const handleStart: UploadContentProps["onStart"] = (rawFile) => {
-		rawFile.uid = getFileId();
+	const handleHash: UploadContentProps["onBeforeHash"] = (rawFile: UploadRawFile) => {
 		const uploadFile: UploadFile = {
 			name: rawFile.name,
 			percentage: 0,
@@ -36,11 +31,21 @@ export function useUploadHandler(
 			size: rawFile.size,
 			raw: rawFile,
 			uid: rawFile.uid,
+			completeCount: 0,
+			uploadCount: 0,
 		};
-		console.log(uploadFiles.value);
 		uploadFiles.value.push(uploadFile);
+		props.onBeforeHash!(uploadFile);
+	};
 
-		props.onStart!(uploadFile);
+	/**
+	 * @description 文件验证完毕可以上传后传入该函数初始化，并加入uploadFiles
+	 * @param file 传入的源文件
+	 */
+	const handleStart: UploadContentProps["onStart"] = (rawFile, HASH: string) => {
+		const file = getFile(rawFile!);
+		file!.HASH = HASH;
+		props.onStart!(rawFile, HASH);
 	};
 
 	/**
@@ -92,5 +97,5 @@ export function useUploadHandler(
 		props.onError!(err, file, uploadFiles.value);
 		// props.onChange(file, uploadFiles.value);
 	};
-	return { handleStart, handleProgress, handleSuccess, handleError, uploadFiles };
+	return { handleHash, handleStart, handleProgress, handleSuccess, handleError, uploadFiles };
 }

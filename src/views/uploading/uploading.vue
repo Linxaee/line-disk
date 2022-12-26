@@ -15,12 +15,13 @@
 					<el-progress
 						:percentage="scope.row.percentage"
 						:status="scope.row.percentage === 100 ? 'success' : ''"
+						:duration="3"
 						color="rgba(99, 125, 255, 0.75)"
 					/>
 				</div>
 			</template>
 			<template #sizeProgress="scope">
-				<div>{{ format(scope.row) }}</div>
+				<div>{{ scope.row.HASH ? format(scope.row) : "文件解析中" }}</div>
 			</template>
 			<template #toolBar="scope">
 				<div class="toolBarContainer">
@@ -74,12 +75,16 @@ const uploadStore = appStore.uploadStore;
 const tableData = computed(() => {
 	return uploadStore.arrFileList;
 });
+// 文件大小展示格式
 const format = (row: any) => {
 	return `${fileSizeTransfer((row.size * row.percentage) / 100)}/${fileSizeTransfer(row.size)}`;
 };
+
+const handleProgressStatus = (scope: any) => {};
 </script>
 
 <style lang="scss" scoped>
+// TODO:优化scss结构
 .uploading {
 	height: 100%;
 }

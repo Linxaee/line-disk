@@ -4,11 +4,15 @@ import { AxiosProgressEvent } from "axios";
 import { NOOP } from "@/global";
 import { Store } from "pinia";
 import { Ref } from "vue";
+import { UploadRawFile } from "../types/index";
 // 文件id
 let fileId = 1;
 // 生成文件id
 export const getFileId = () => Date.now() + fileId++;
 
+export interface UploadEvent {
+	progress: number;
+}
 /**
  * @interface 基础props
  */
@@ -39,12 +43,9 @@ export const UploadBasePropsDefault: InferDefaults<UploadBaseProps> = {
  */
 export interface UploadProps extends UploadBaseProps {
 	onExceed?: UploadCallBacks["onExceed"];
-	onStart?: (file: UploadFile) => void;
-	onProgress?: (
-		evt: AxiosProgressEvent,
-		uploadFile: UploadFile,
-		uploadFiles: UploadFiles
-	) => void;
+	onBeforeHash?: (file: UploadFile) => void;
+	onStart?: (file: UploadRawFile, HASH: string) => void;
+	onProgress?: (evt: UploadEvent, uploadFile: UploadFile, uploadFiles: UploadFiles) => void;
 	onSuccess?: (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => unknown;
 	onError?: (err: Error, uploadFile: UploadFile, uploadFiles: UploadFiles) => void;
 }

@@ -9,6 +9,7 @@ import type UploadContent from "./linUploadContent.vue";
  */
 export interface UploadContentProps extends UploadBaseProps {
 	onExceed?: UploadCallBacks["onExceed"];
+	onBeforeHash?: UploadCallBacks["onBeforeHash"];
 	onStart?: UploadCallBacks["onStart"];
 	onProgress?: UploadCallBacks["onProgress"];
 	onSuccess?: UploadCallBacks["onSuccess"];
@@ -19,6 +20,7 @@ export interface UploadContentProps extends UploadBaseProps {
  */
 export const UploadContentPropsDefault: InferDefaults<UploadContentProps> = {
 	onExceed: () => NOOP,
+	onBeforeHash: () => NOOP,
 	onStart: () => NOOP,
 	onProgress: () => NOOP,
 	onSuccess: () => NOOP,

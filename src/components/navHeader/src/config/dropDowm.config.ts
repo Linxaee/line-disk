@@ -18,10 +18,14 @@ export const dropDownConfig: IDropDownConfig = {
 			uploaded: true,
 			uploadConfig: {
 				limit: 10,
-				cut: false,
+				cut: true,
 				url: "/files/uploadSingle",
-				onStart(file) {
+				onBeforeHash(file) {
 					appStore.uploadStore.addFile({ isPause: false, ...file });
+				},
+				onStart(file, HASH) {
+					const uploadFile = appStore.uploadStore.getFile(file.uid);
+					uploadFile.HASH = HASH;
 				},
 				onProgress: (evt, file) => {
 					const curFile = appStore.uploadStore.getFile(file.uid);
