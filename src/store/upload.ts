@@ -1,13 +1,17 @@
 import { UploadFile } from "@/components/linUpload";
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-const initData: Record<string, UploadFile> = {
+interface UploadingFile extends UploadFile {
+	isPause: boolean;
+}
+const initData: Record<string, UploadingFile> = {
 	"1": {
 		name: "哦哦哦.excel",
 		percentage: 20,
 		size: 45874110,
 		uid: 1,
 		status: "uploading",
+		isPause: false,
 	},
 	"2": {
 		name: "啊啊啊.zip",
@@ -15,10 +19,11 @@ const initData: Record<string, UploadFile> = {
 		size: 45874110,
 		uid: 2,
 		status: "uploading",
+		isPause: true,
 	},
 };
 export const useUploadStore = defineStore("upload", () => {
-	const fileList = ref<Record<string, UploadFile>>(initData);
+	const fileList = ref<Record<string, UploadingFile>>({});
 	const arrFileList = computed(() => {
 		return Object.values(fileList.value);
 	});
@@ -31,7 +36,7 @@ export const useUploadStore = defineStore("upload", () => {
 	const clearFile = () => {
 		fileList.value = {};
 	};
-	const addFile = (file: UploadFile) => {
+	const addFile = (file: UploadingFile) => {
 		fileList.value[file.uid] = file;
 	};
 

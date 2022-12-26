@@ -1,5 +1,8 @@
 export const fileIconMap = {
 	folder: "/src/assets/img/fileIcons/folder.png",
+	jpg: "/src/assets/img/fileIcons/jpg.png",
+	png: "/src/assets/img/fileIcons/png.png",
+	svg: "/src/assets/img/fileIcons/svg.png",
 	excel: "/src/assets/img/fileIcons/excel.png",
 	exe: "/src/assets/img/fileIcons/exe.png",
 	txt: "/src/assets/img/fileIcons/txt.png",
@@ -8,6 +11,8 @@ export const fileIconMap = {
 	pdf: "/src/assets/img/fileIcons/pdf.png",
 	ppt: "/src/assets/img/fileIcons/ppt.png",
 	word: "/src/assets/img/fileIcons/word.png",
+	doc: "/src/assets/img/fileIcons/word.png",
+	docx: "/src/assets/img/fileIcons/word.png",
 	zip: "/src/assets/img/fileIcons/zip.png",
 	"": "/src/assets/img/fileIcons/file-fill.png",
 };

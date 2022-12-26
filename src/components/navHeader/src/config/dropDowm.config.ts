@@ -1,5 +1,6 @@
 import { IDropDownConfig } from "@/components/linDropDown";
 import appStore from "@/store";
+// import { ElNotification } from "element-plus";
 export const dropDownConfig: IDropDownConfig = {
 	trigger: "click",
 	size: "large",
@@ -20,7 +21,7 @@ export const dropDownConfig: IDropDownConfig = {
 				cut: false,
 				url: "/files/uploadSingle",
 				onStart(file) {
-					appStore.uploadStore.addFile(file);
+					appStore.uploadStore.addFile({ isPause: false, ...file });
 				},
 				onProgress: (evt, file) => {
 					const curFile = appStore.uploadStore.getFile(file.uid);
@@ -30,7 +31,16 @@ export const dropDownConfig: IDropDownConfig = {
 				},
 				onSuccess(response, uploadFile, uploadFiles) {
 					console.log(`${uploadFile.name}下了完了`);
-					appStore.uploadStore.deleteFile(uploadFile.uid);
+					ElNotification({
+						type: "success",
+						message: `${uploadFile.name} 已完成传输`,
+						position: "bottom-right",
+						duration: 2000,
+					});
+					setTimeout(() => {
+						appStore.uploadStore.deleteFile(uploadFile.uid);
+					}, 2000);
+
 					// console.log(response);
 					// console.log(uploadFile);
 					// console.log(uploadFiles);

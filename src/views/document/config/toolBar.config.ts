@@ -51,4 +51,5 @@ export const toolBarConfig: IToolBarConfig = {
 			clickCallBack: handleCancelSelect,
 		},
 	],
+	style: {},
 };

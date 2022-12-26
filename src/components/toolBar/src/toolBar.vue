@@ -10,11 +10,12 @@
 					:hide-after="item.tooltipConfig?.hideAfter ?? 10"
 					:show-after="item.tooltipConfig?.showAfter ?? 100"
 				>
-					<div class="toolBarItem" @click="item.clickCallBack?.(item)">
-						<el-icon :color="item.color ?? 'white'" :size="item.size ?? 18">
-							<component :is="item.icon"></component>
-						</el-icon>
-					</div>
+					<slot :name="item.icon" :item="item">
+						<div class="toolBarItem" @click="item.clickCallBack?.(item, scope)">
+							<el-icon :color="item.color ?? 'white'" :size="item.size ?? 18">
+								<component :is="item.icon"></component>
+							</el-icon></div
+					></slot>
 				</el-tooltip>
 			</template>
 		</div>
@@ -24,7 +25,7 @@
 <script setup lang="ts">
 import { toolBarItem, IToolBarConfig } from "../types/index";
 
-const props = defineProps<{ toolBarConfig: IToolBarConfig }>();
+defineProps<{ toolBarConfig: IToolBarConfig; scope?: any }>();
 
 const emit = defineEmits<{
 	(e: "toolBarItemClick", item: toolBarItem): void;
@@ -37,11 +38,7 @@ const handleItemClick = (item: toolBarItem) => {
 
 <style lang="scss" scoped>
 .toolBar {
-	position: absolute;
-	z-index: 9999;
-	bottom: 50px;
-	left: calc(50% - 110px + 120px);
-	width: 182px;
+	display: inline-block;
 	height: 30px;
 	padding: 8px 16px;
 	border-radius: 10px;
@@ -51,7 +48,6 @@ const handleItemClick = (item: toolBarItem) => {
 }
 .toolBarWrapper {
 	display: flex;
-
 	.toolBarItem {
 		@include flexCenter(row);
 		@include square(30px);

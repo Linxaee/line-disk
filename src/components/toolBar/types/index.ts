@@ -1,5 +1,5 @@
-type effectType = "dark" | "light";
-type clickCb = (item: toolBarItem) => void;
+export type effectType = "dark" | "light";
+export type clickCb = (item: toolBarItem, scope?: any) => void;
 /**
  * @interface 图标上方气泡的配置项类型接口
  * @link https://element-plus.gitee.io/zh-CN/component/tooltip.html#%E5%B1%9E%E6%80%A7

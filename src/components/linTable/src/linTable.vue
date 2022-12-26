@@ -110,4 +110,8 @@ defineExpose({ clearSelection });
 .el-table {
 	padding: 0 30px;
 }
+
+:deep(.el-scrollbar__bar.is-horizontal) {
+	height: 0 !important;
+}
 </style>

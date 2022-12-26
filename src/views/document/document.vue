@@ -23,6 +23,7 @@
 			<ToolBar
 				:toolBarConfig="toolBarConfig"
 				v-show="documentStore.selectedFileList.length"
+				class="toolBar"
 			></ToolBar>
 		</transition>
 	</div>
@@ -69,5 +70,11 @@ const handleSelectionChange = (files: LinFileItem[]) => {
 }
 .animate__animated.animate__bounce {
 	--animate-duration: 0.3s;
+}
+.toolBar {
+	position: absolute;
+	z-index: 9999;
+	bottom: 50px;
+	left: calc(50% - 110px + 120px);
 }
 </style>
