@@ -24,6 +24,7 @@ module.exports = {
 		{ name: "directives" },
 		{ name: "example" },
 		{ name: "document" },
+		{ name: "uploading" },
 	],
 	// it needs to match the value for field type. Eg.: 'fix'
 	/*  scopeOverrides: {
