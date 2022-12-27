@@ -12,11 +12,14 @@ interface throttleFnArgs {
 	// 配置文件
 	option: throttleFnOption;
 }
+interface throttleFnReturnType extends Function {
+	cancel: Function;
+}
 type throttleFn = (
 	interval: throttleFnArgs["interval"],
 	fn: throttleFnArgs["fn"],
 	option?: throttleFnArgs["option"]
-) => Function;
+) => throttleFnReturnType;
 
 export const throttle: throttleFn = (interval, fn, option = { leading: true, trailing: false }) => {
 	let lastTime = 0;
@@ -46,10 +49,15 @@ export const throttle: throttleFn = (interval, fn, option = { leading: true, tra
 			timer = setTimeout(() => {
 				timer = undefined;
 				fn.apply(this, args);
-				lastTime = nowTime;
+				lastTime = new Date().getTime();
 			}, remainTime);
 		}
 	};
 
+	_throttle.cancel = function () {
+		if (timer) clearTimeout(timer);
+		timer = undefined;
+		lastTime = 0;
+	};
 	return _throttle;
 };
