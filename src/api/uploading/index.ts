@@ -68,3 +68,10 @@ export const uploadMerge: uploadingApis["uploadMerge"] = (
 		...options,
 	});
 };
+
+export const getFileList: uploadingApis["getFileList"] = () => {
+	return LinRequest.request({
+		url: "/files/getFileList",
+		method: "get",
+	});
+};

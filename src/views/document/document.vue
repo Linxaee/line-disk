@@ -13,6 +13,9 @@
 					scope.row.createTime
 				}}</span>
 			</template>
+			<template #fileSize="scope">
+				<span class="size">{{ fileSizeTransfer(scope.row.fileSize) }}</span>
+			</template>
 		</LinTable>
 		<transition
 			name="animate__animated animate__bounce animate__delay"
@@ -37,31 +40,12 @@ import { columnConfig } from "./config/columnItems.config";
 import { tableConfig } from "./config/table.config";
 import { toolBarConfig } from "./config/toolBar.config";
 
-import { LinFileItem } from "@/api/requests/types";
+import { fileSizeTransfer } from "@/utils";
 
-import appStore from "@/store";
+import { useTableData } from "./hooks/useTableData";
 
-import { ref, onMounted } from "vue";
-
-const linTableRef = ref<InstanceType<typeof LinTable>>();
-
-// 取出documentStore
-const documentStore = appStore.documentStore;
-// 表格数据来源
-const tableData = documentStore.displayedFileList;
-
-// mounted时ref才有值，才能进行赋值
-onMounted(() => {
-	// 将linTable上的清除选项方法存入store中
-	documentStore.clearSelectedFileList = linTableRef.value?.clearSelection as any;
-});
-
-/**
- * @description 选择数组改变后储存到store中
- */
-const handleSelectionChange = (files: LinFileItem[]) => {
-	documentStore.selectedFileList = files;
-};
+const { tableData, documentStore, linTableRef, handleSelectionChange } = useTableData();
+console.log(documentStore);
 </script>
 
 <style lang="scss" scoped>

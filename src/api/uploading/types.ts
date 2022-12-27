@@ -36,4 +36,5 @@ export interface uploadingApis {
 		headers?: Record<string, any>,
 		options?: Record<string, any>
 	) => Promise<unknown>;
+	getFileList: () => Promise<unknown>;
 }
