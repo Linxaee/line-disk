@@ -42,10 +42,12 @@ export function useUploadHandler(
 	 * @description 文件验证完毕可以上传后传入该函数初始化，并加入uploadFiles
 	 * @param file 传入的源文件
 	 */
-	const handleStart: UploadContentProps["onStart"] = (rawFile, HASH: string) => {
+	const handleStart: UploadContentProps["onStart"] = (rawFile, HASH: string, suffix: string) => {
 		const file = getFile(rawFile!);
+
 		file!.HASH = HASH;
-		props.onStart!(rawFile, HASH);
+		file!.suffix = suffix;
+		props.onStart!(rawFile, HASH, suffix);
 	};
 
 	/**

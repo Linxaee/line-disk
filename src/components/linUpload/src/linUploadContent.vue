@@ -85,12 +85,13 @@ const uploadFiles = async (files: File[]) => {
 			 */
 			const { HASH, suffix } = await getFileHASH(rawFile);
 			// 调用onStart将HASH赋给文件
-			onStart!(rawFile, HASH);
+			console.log(suffix);
+			onStart!(rawFile, HASH, suffix);
 			// 开始上传文件
 			upload(rawFile, HASH, suffix);
 		} else {
 			rawFile.uid = getFileId();
-			onStart!(rawFile, "");
+			onStart!(rawFile, "", "");
 			upload(rawFile);
 		}
 	}

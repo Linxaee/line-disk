@@ -1,6 +1,6 @@
 import LinRequest from "..";
-import { uploadingApis } from "./types";
-
+import { uploadingApis, FileInfo } from "./types";
+export * from "./types";
 /**
  * @description 获取已上传切片
  * @param HASH 文件HASH值
@@ -56,6 +56,7 @@ export const uploadChunks: uploadingApis["uploadChunks"] = (
 export const uploadMerge: uploadingApis["uploadMerge"] = (
 	count: number,
 	HASH: string,
+	fileInfo: FileInfo,
 	headers?: Record<string, any>,
 	options?: Record<string, any>
 ) => {
@@ -63,7 +64,7 @@ export const uploadMerge: uploadingApis["uploadMerge"] = (
 		url: "/files/uploadMerge",
 		method: "post",
 		headers: headers,
-		data: { count, HASH },
+		data: { count, HASH, ...fileInfo },
 		...options,
 	});
 };

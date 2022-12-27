@@ -7,9 +7,11 @@ import { ref, shallowRef } from "vue";
 import appStore from "@/store";
 import { UploadFile } from "../types/index";
 import { throttle } from "@/utils";
-import { getAlreadyChunks, uploadChunks, uploadMerge } from "@/api";
+import { getAlreadyChunks, uploadChunks, uploadMerge, FileInfo, FileType, FileStatus } from "@/api";
+
 /**
  * @TODO 添加异常处理
+ * @FIX 耦合度有点高，之后再说吧
  */
 
 const uploadStore = appStore.uploadStore;
@@ -48,7 +50,7 @@ const changeBuffer = (rawFile: UploadRawFile) => {
 
 export function useFileUpload(props: UploadContentProps) {
 	let { url, method, headers, onSuccess, onError, onProgress } = props;
-	const _onProgress = throttle(100, onProgress!, { leading: true, trailing: true });
+	const _onProgress = throttle(250, onProgress!, { leading: true, trailing: true });
 
 	/**
 	 * @description 直接上传文件不进行切片
@@ -143,7 +145,17 @@ export function useFileUpload(props: UploadContentProps) {
 		_onProgress.cancel();
 		_onProgress!({ progress: 1 }, file);
 
-		const data = await uploadMerge(uploadFile.completeCount, HASH, headers);
+		const fileInfo: FileInfo = {
+			filename: uploadFile.name,
+			fileExt: uploadFile.suffix!,
+			fileMD5: HASH,
+			fileSize: uploadFile.size!,
+			fileType: FileType["other"],
+			fileStatus: FileStatus["common"],
+		};
+		console.log(fileInfo);
+
+		const data = await uploadMerge(uploadFile.completeCount, HASH, fileInfo, headers);
 		if ((data as any).code === 0) onSuccess!(data, file);
 
 		// console.log(data);
@@ -181,9 +193,11 @@ export function useFileUpload(props: UploadContentProps) {
 				if (request instanceof Promise) {
 					return request.then(
 						() => {
+							delete requests[chunk.filename];
 							complete(uploadFile, rawFile, HASH);
 						},
 						(err) => {
+							delete requests[chunk.filename];
 							onError!(err, rawFile);
 						}
 					);
@@ -197,6 +211,7 @@ export function useFileUpload(props: UploadContentProps) {
 				// 全部上传成功后的回调
 				return Promise.all(Object.values(requests)).then(onFulfilled, onRejected);
 			} catch (err) {
+				onError!(err as any, rawFile);
 				return Promise.reject(err);
 			}
 		});

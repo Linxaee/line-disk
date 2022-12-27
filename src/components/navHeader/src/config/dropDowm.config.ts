@@ -1,6 +1,7 @@
 import { IDropDownConfig } from "@/components/linDropDown";
 import appStore from "@/store";
 // import { ElNotification } from "element-plus";
+const lastTime = 0;
 export const dropDownConfig: IDropDownConfig = {
 	trigger: "click",
 	size: "large",
@@ -23,9 +24,10 @@ export const dropDownConfig: IDropDownConfig = {
 				onBeforeHash(file) {
 					appStore.uploadStore.addFile({ isPause: false, ...file });
 				},
-				onStart(file, HASH) {
+				onStart(file, HASH, suffix) {
 					const uploadFile = appStore.uploadStore.getFile(file.uid);
 					uploadFile.HASH = HASH;
+					uploadFile.suffix = suffix;
 				},
 				onProgress: (evt, file) => {
 					const curFile = appStore.uploadStore.getFile(file.uid);
