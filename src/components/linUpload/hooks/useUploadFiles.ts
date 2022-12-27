@@ -6,6 +6,7 @@ import { AxiosRequestConfig } from "axios";
 import { ref, shallowRef } from "vue";
 import appStore from "@/store";
 import { UploadFile } from "../types/index";
+import { throttle } from "@/utils";
 /**
  * @TODO 添加异常处理
  */
@@ -46,6 +47,7 @@ const changeBuffer = (rawFile: UploadRawFile) => {
 
 export function useFileUpload(props: UploadContentProps) {
 	let { url, method, headers, onSuccess, onError, onProgress } = props;
+	const _onProgress = throttle(100, onProgress!, { leading: true, trailing: true });
 	/**
 	 * @description 直接上传文件不进行切片
 	 * @param rawFile 原始文件
@@ -134,9 +136,14 @@ export function useFileUpload(props: UploadContentProps) {
 	}
 	async function complete(uploadFile: UploadFile, file: UploadRawFile, HASH?: string) {
 		uploadFile.completeCount++;
-		onProgress!({ progress: uploadFile.completeCount / uploadFile.uploadCount }, file);
+
+		_onProgress!({ progress: uploadFile.completeCount / uploadFile.uploadCount }, file);
+
 		if (uploadFile.completeCount < uploadFile.uploadCount) return;
-		onProgress!({ progress: 1 }, file);
+
+		_onProgress.cancel();
+		_onProgress!({ progress: 1 }, file);
+
 		const option: AxiosRequestConfig = {
 			url: "/files/uploadMerge",
 			method: "post",
