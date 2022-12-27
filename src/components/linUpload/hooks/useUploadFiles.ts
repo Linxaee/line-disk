@@ -17,10 +17,12 @@ import { getAlreadyChunks, uploadChunks, uploadMerge, FileInfo, FileType, FileSt
 const uploadStore = appStore.uploadStore;
 
 const requests = shallowRef<Record<string, XMLHttpRequest | Promise<unknown>>>({});
-/**
- * @description 默认单片大小,1mb
- */
+
+// 默认单片大小 1MB
 let maxSize = 1 * 1024 * 1024;
+// 默认切片份数 100份
+let maxCount = 100;
+
 /**
  * @description 将传入的文件转化成字节流
  * @param rawFile 要上传的文件
@@ -50,6 +52,8 @@ const changeBuffer = (rawFile: UploadRawFile) => {
 
 export function useFileUpload(props: UploadContentProps) {
 	let { url, method, headers, onSuccess, onError, onProgress } = props;
+
+	// 节流包裹onProgress函数
 	const _onProgress = throttle(250, onProgress!, { leading: true, trailing: true });
 
 	/**
@@ -59,11 +63,12 @@ export function useFileUpload(props: UploadContentProps) {
 	 */
 	async function uploadSingle(rawFile: UploadRawFile) {
 		const { uid } = rawFile;
-
+		// 构造formData数据
 		const formData = new FormData();
 		formData.append("file", rawFile);
 		formData.append("filename", rawFile.name);
 
+		// 请求配置
 		const option: AxiosRequestConfig = {
 			url,
 			method,
@@ -85,6 +90,7 @@ export function useFileUpload(props: UploadContentProps) {
 		};
 
 		try {
+			// 获取请求的promise对象，根据文件uid存入requests对象，以备后用
 			const request = LinRequest.request(option);
 			requests.value[uid] = request;
 			if (request instanceof Promise) {
@@ -104,6 +110,13 @@ export function useFileUpload(props: UploadContentProps) {
 		const { HASH, suffix } = await changeBuffer(rawFile);
 		return { HASH, suffix };
 	}
+
+	/**
+	 * @description 获取已上传切片
+	 * @param HASH 文件HASH
+	 * @param suffix 文件后缀
+	 * @returns
+	 */
 	async function getAlready(HASH: string, suffix: string) {
 		const data = await getAlreadyChunks(HASH, suffix, headers);
 
@@ -113,19 +126,30 @@ export function useFileUpload(props: UploadContentProps) {
 			return { isComplete, fileList: (data as any).fileList };
 		}
 	}
+
+	/**
+	 * @description 切割文件
+	 * @param HASH 文件HASH
+	 * @param suffix 文件后缀
+	 * @param rawFile 原始文件
+	 * @returns 切片后的chunks数组
+	 */
 	async function sliceFile(HASH: string, suffix: string, rawFile: UploadRawFile) {
+		// 获取上传文件对象
 		const uploadFile = uploadStore.getFile(rawFile.uid);
-		// 实现文件切片处理 「固定数量 & 固定大小」
+		// 计算待上传的份数
 		uploadFile.uploadCount = Math.ceil(rawFile.size / maxSize);
+
 		let index = 0;
 		let chunks = [];
-		if (uploadFile.uploadCount > 100) {
-			maxSize = rawFile.size / 100;
-			uploadFile.uploadCount = 100;
+		// 若待上传份数大于
+		if (uploadFile.uploadCount > maxCount) {
+			maxSize = rawFile.size / maxCount;
+			uploadFile.uploadCount = maxCount;
 		}
 		// 避免文件大小为0不切割文件，最小传一块
 		if (uploadFile.uploadCount === 0) uploadFile.uploadCount = 1;
-
+		// 构造chunk并推入chunks数组
 		while (index < uploadFile.uploadCount) {
 			chunks.push({
 				file: rawFile.slice(index * maxSize, (index + 1) * maxSize),
@@ -136,15 +160,17 @@ export function useFileUpload(props: UploadContentProps) {
 		return chunks;
 	}
 	async function complete(uploadFile: UploadFile, file: UploadRawFile, HASH: string) {
+		// 每完成一个请求，已完成数（completeCount）+++
 		uploadFile.completeCount++;
-
+		// 调用onProgress回调进度管控
 		_onProgress!({ progress: uploadFile.completeCount / uploadFile.uploadCount }, file);
-
+		// 未上传完则返回不调用merge
 		if (uploadFile.completeCount < uploadFile.uploadCount) return;
-
+		// 上传完则取消上一个onProgress回调的调用
 		_onProgress.cancel();
+		// 直接更新进度为100
 		_onProgress!({ progress: 1 }, file);
-
+		// 待上传文件信息
 		const fileInfo: FileInfo = {
 			filename: uploadFile.name,
 			fileExt: uploadFile.suffix!,
@@ -153,12 +179,10 @@ export function useFileUpload(props: UploadContentProps) {
 			fileType: FileType["other"],
 			fileStatus: FileStatus["common"],
 		};
-		console.log(fileInfo);
-
+		// 获取文件合并结果
 		const data = await uploadMerge(uploadFile.completeCount, HASH, fileInfo, headers);
 		if ((data as any).code === 0) onSuccess!(data, file);
-
-		// console.log(data);
+		else onError!(data as any, file);
 	}
 	async function uploadChunk(
 		isComplete: boolean,
@@ -177,16 +201,18 @@ export function useFileUpload(props: UploadContentProps) {
 		const requests: Record<string, Promise<unknown>> = {};
 
 		chunks.forEach(async (chunk: any) => {
-			// 已经上传的无需在上传
+			// 已经上传的无需在上传，直接调用complete函数完成当前chunk上传
 			if (already.length > 0 && already.includes(chunk.filename)) {
 				complete(uploadFile, rawFile, HASH);
 				return;
 			}
+			// 构造formData数据
 			let formData = new FormData();
 			formData.append("file", chunk.file);
 			formData.append("filename", chunk.filename);
+
 			try {
-				// 将上传chunk的请求装入数组
+				// 跟去chunk的filename将上传chunk的请求装入requests对象
 				const request = uploadChunks(formData, headers);
 				requests[chunk.filename] = request;
 				// 将chunk上传成功的回调设置为complete,失败的回调设置为onError

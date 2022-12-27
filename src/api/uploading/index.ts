@@ -69,6 +69,10 @@ export const uploadMerge: uploadingApis["uploadMerge"] = (
 	});
 };
 
+/**
+ * @description 获取现有文件列表
+ * @returns
+ */
 export const getFileList: uploadingApis["getFileList"] = () => {
 	return LinRequest.request({
 		url: "/files/getFileList",

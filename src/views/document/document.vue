@@ -45,7 +45,6 @@ import { fileSizeTransfer } from "@/utils";
 import { useTableData } from "./hooks/useTableData";
 
 const { tableData, documentStore, linTableRef, handleSelectionChange } = useTableData();
-console.log(documentStore);
 </script>
 
 <style lang="scss" scoped>
