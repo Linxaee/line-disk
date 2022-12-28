@@ -26,7 +26,7 @@ const props = withDefaults(
 		headers?: Record<string, any>;
 		onExceed?: UploadCallBacks["onExceed"];
 		onBeforeHash?: (file: UploadFile) => void;
-		onStart?: (file: UploadRawFile, HASH: string) => void;
+		onStart?: (file: UploadRawFile, HASH: string, suffix: string) => void;
 		onProgress?: (evt: UploadEvent, uploadFile: UploadFile, uploadFiles: UploadFiles) => void;
 		onSuccess?: (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => unknown;
 		onError?: (err: Error, uploadFile: UploadFile, uploadFiles: UploadFiles) => void;

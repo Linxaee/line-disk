@@ -1,6 +1,5 @@
 import { fileIntoRecycle } from "@/api";
 import appStore from "@/store";
-const indexStore = appStore.indexStore;
 export function useToolBarClick() {
 	const documentStore = appStore.documentStore;
 	/**
@@ -35,9 +34,6 @@ export function useToolBarClick() {
 					message: res.message,
 				});
 			}
-			setTimeout(() => {
-				indexStore.reloadApp();
-			}, 300);
 		});
 	};
 

@@ -19,6 +19,7 @@ import { UploadCallBacks, UploadRawFile } from "../types/index";
 import { getFileId } from "./linUpload";
 import { useFileUpload } from "../hooks/useUploadFiles";
 import { UploadContentPropsDefault } from "./linUploadContent";
+import appStore from "@/store";
 const props = withDefaults(
 	defineProps<{
 		url?: string;
@@ -43,6 +44,8 @@ const props = withDefaults(
 const inputRef = ref<HTMLInputElement>();
 
 const { uploadSingle, getFileHASH, getAlready, sliceFile, uploadChunk } = useFileUpload(props);
+
+const indexStore = appStore.indexStore;
 
 const handleClick = () => {
 	// 重置选择内容并调用点击
@@ -95,6 +98,9 @@ const uploadFiles = async (files: File[]) => {
 			upload(rawFile);
 		}
 	}
+	setTimeout(() => {
+		indexStore.reloadApp();
+	}, 300);
 };
 
 const upload = async (rawFile: UploadRawFile, HASH?: string, suffix?: string) => {
