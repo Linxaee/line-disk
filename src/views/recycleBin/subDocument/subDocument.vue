@@ -62,6 +62,7 @@ const { subDocumentStore, tableData, linTableRef, handleSelectionChange } = useT
 }
 .empty {
 	height: 100%;
+	margin-top: 50px;
 }
 .animate__animated.animate__bounce {
 	--animate-duration: 0.3s;

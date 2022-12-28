@@ -1,6 +1,6 @@
 import appStore from "@/store";
 import LinTable from "@/components/linTable";
-import { onMounted, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 import { getRecycleFileList } from "@/api";
 import { LinFileItem } from "@/api/requests/types";
 
@@ -27,14 +27,14 @@ export function useTableData() {
 		// 获取现有文件列表
 		const data = await getRecycleFileList();
 		// 现有文件列表存入store
-		console.log("重新请求了");
-
 		subDocumentStore.recycleFileList = (data as any).fileList;
-		// subDocumentStore.selectedRecycleList = [];
-		console.log((data as any).fileList, subDocumentStore.selectedRecycleList);
-
 		// 现有文件列表存入tableData
 		tableData.value = (data as any).fileList;
+	});
+
+	onBeforeUnmount(() => {
+		// 重置已选项
+		subDocumentStore.selectedRecycleList = [];
 	});
 
 	return { subDocumentStore, tableData, linTableRef, handleSelectionChange };
