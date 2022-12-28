@@ -97,7 +97,7 @@ const handleMenuChange = (item: menuItem) => {
 .el-main {
 	color: #333;
 	text-align: center;
-	background-color: #f0f2f5;
+	background-color: white;
 	padding: 0;
 }
 </style>

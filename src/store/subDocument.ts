@@ -2,17 +2,15 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import { LinFileItem } from "@/api/requests/types";
 
-export const useDocumentStore = defineStore("document", () => {
+export const useSubDocumentStore = defineStore("subDocument", () => {
 	/**
 	 * @description 当前展示的文件列表
 	 * @TODO (做无限加载)                                                                                                                                  )
 	 */
-	const displayedFileList = ref([]);
 	const recycleFileList = ref([]);
 	/**
 	 * @description 选中的文件数组
 	 */
-	const selectedFileList = ref<LinFileItem[]>([]);
 	const selectedRecycleList = ref<LinFileItem[]>([]);
 
 	/**
@@ -21,9 +19,7 @@ export const useDocumentStore = defineStore("document", () => {
 	const clearSelectedFileList = () => {};
 
 	return {
-		displayedFileList,
 		recycleFileList,
-		selectedFileList,
 		selectedRecycleList,
 		clearSelectedFileList,
 	};

@@ -10,4 +10,8 @@ const { initPage } = useRecycle();
 initPage();
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.recycleBin {
+	height: 100%;
+}
+</style>

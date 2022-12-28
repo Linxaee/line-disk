@@ -42,7 +42,7 @@ import { toolBarConfig } from "./config/toolBar.config";
 
 import { fileSizeTransfer } from "@/utils";
 
-import { useTableData } from "./hooks/useTableData";
+import { useTableData } from "../recycleBin/subAlbum/hooks/useTableData";
 
 const { tableData, documentStore, linTableRef, handleSelectionChange } = useTableData();
 </script>
