@@ -22,7 +22,7 @@
 											:src="
 												fileNameToIconUrl(
 													scope.row.fileName,
-													scope.row.type
+													scope.row.fileType
 												)
 											"
 											alt=""

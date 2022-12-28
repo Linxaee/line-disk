@@ -55,6 +55,7 @@ export interface UploadProps extends UploadBaseProps {
  */
 export const UploadPropsDefault: InferDefaults<UploadProps> = {
 	...UploadBasePropsDefault,
+	onBeforeHash: () => NOOP,
 	onStart: () => NOOP,
 	onExceed: () => NOOP,
 	onProgress: () => NOOP,

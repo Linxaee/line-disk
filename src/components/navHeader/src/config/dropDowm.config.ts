@@ -1,7 +1,7 @@
 import { IDropDownConfig } from "@/components/linDropDown";
 import appStore from "@/store";
-// import { ElNotification } from "element-plus";
-const lastTime = 0;
+import { useItemClick } from "../hooks/useItemClick";
+const { handleCreateNewFolder } = useItemClick();
 export const dropDownConfig: IDropDownConfig = {
 	trigger: "click",
 	size: "large",
@@ -57,13 +57,12 @@ export const dropDownConfig: IDropDownConfig = {
 			icon: "FolderAdd",
 			context: "上传文件夹",
 			type: 1,
-			uploaded: true,
 		},
 		{
 			icon: "Folder",
 			context: "新建文件夹",
 			type: 1,
-			uploaded: true,
+			clickCb: handleCreateNewFolder,
 		},
 		{
 			icon: "",
@@ -74,13 +73,11 @@ export const dropDownConfig: IDropDownConfig = {
 			icon: "Picture",
 			context: "上传照片/视频",
 			type: 1,
-			uploaded: true,
 		},
 		{
 			icon: "FolderAdd",
 			context: "上传照片文件夹",
 			type: 1,
-			uploaded: true,
 		},
 	],
 };

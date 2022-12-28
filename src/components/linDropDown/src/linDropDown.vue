@@ -36,6 +36,7 @@
 								:icon="item.icon"
 								:disabled="item.disabled"
 								:divided="item.divided"
+								@click="item.clickCb"
 								>{{ item.context }}</el-dropdown-item
 							>
 						</div>

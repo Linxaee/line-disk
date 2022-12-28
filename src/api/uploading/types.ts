@@ -13,8 +13,8 @@ export enum FileStatus {
  * @description 文件类型
  */
 export enum FileType {
-	folder = 0,
-	other = 1,
+	folder = 1,
+	other = 2,
 }
 /**
  * @interface 需上传的文件信息
@@ -56,6 +56,8 @@ export interface uploadingApis {
 	getFileList: () => Promise<LinResponse>;
 	// 获取文件列表
 	getRecycleFileList: () => Promise<LinResponse>;
+	// 创建文件夹
+	createFolder: (foldername: string) => Promise<LinResponse>;
 	// 文件送入回收站
 	fileIntoRecycle: (idList: number[], headers?: Record<string, any>) => Promise<LinResponse>;
 	// 文件移出回收站

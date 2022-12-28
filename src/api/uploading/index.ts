@@ -92,6 +92,18 @@ export const getRecycleFileList: uploadingApis["getRecycleFileList"] = () => {
 };
 
 /**
+ * @description 创建文件夹
+ * @returns
+ */
+export const createFolder: uploadingApis["createFolder"] = (foldername: string) => {
+	return LinRequest.request({
+		url: "/files/createFolder",
+		method: "post",
+		params: { foldername },
+	});
+};
+
+/**
  * @description 文件收入回收站
  * @returns
  */

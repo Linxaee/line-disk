@@ -39,7 +39,6 @@ export interface dropDownItem {
 	 * @description 该项的类型，1为普通项，2为标题分割项
 	 */
 	type: itemType;
-
 	/**
 	 * @description 是否启用upload
 	 */
@@ -48,7 +47,10 @@ export interface dropDownItem {
 	 * @description upload组件的选项
 	 */
 	uploadConfig?: UploadProps;
-
+	/**
+	 * @description 点击的回调函数
+	 */
+	clickCb?: () => void;
 	/**
 	 * @description 其它属性，style等
 	 */
