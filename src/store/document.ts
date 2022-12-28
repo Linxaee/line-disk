@@ -8,12 +8,11 @@ export const useDocumentStore = defineStore("document", () => {
 	 * @TODO (做无限加载)                                                                                                                                  )
 	 */
 	const displayedFileList = ref([]);
-	const recycleFileList = ref([]);
+
 	/**
 	 * @description 选中的文件数组
 	 */
 	const selectedFileList = ref<LinFileItem[]>([]);
-	const selectedRecycleList = ref<LinFileItem[]>([]);
 
 	/**
 	 * @description 保存elForm上的clearSelection方法
@@ -22,9 +21,7 @@ export const useDocumentStore = defineStore("document", () => {
 
 	return {
 		displayedFileList,
-		recycleFileList,
 		selectedFileList,
-		selectedRecycleList,
 		clearSelectedFileList,
 	};
 });

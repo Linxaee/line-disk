@@ -7,7 +7,6 @@ export function useToolBarClick() {
 	 * @description 清除多选
 	 */
 	const handleCancelSelect = () => {
-		subDocumentStore.selectedRecycleList = [];
 		subDocumentStore.clearSelectedFileList();
 	};
 
@@ -24,17 +23,21 @@ export function useToolBarClick() {
 			});
 			const res = await deleteFile(idList);
 			if (res.code === 0) {
+				subDocumentStore.clearSelectedFileList();
 				ElMessage({
 					type: "success",
 					message: res.message,
 				});
 			} else {
+				subDocumentStore.clearSelectedFileList();
 				ElMessage({
 					type: "error",
 					message: res.message,
 				});
 			}
-			indexStore.reloadApp();
+			setTimeout(() => {
+				indexStore.reloadApp();
+			}, 300);
 		});
 	};
 
@@ -50,17 +53,21 @@ export function useToolBarClick() {
 			});
 			const res = await fileOutRecycle(idList);
 			if (res.code === 0) {
+				subDocumentStore.clearSelectedFileList();
 				ElMessage({
 					type: "success",
 					message: res.message,
 				});
 			} else {
+				subDocumentStore.clearSelectedFileList();
 				ElMessage({
 					type: "error",
 					message: res.message,
 				});
 			}
-			indexStore.reloadApp();
+			setTimeout(() => {
+				indexStore.reloadApp();
+			}, 300);
 		});
 	};
 	return { handleCancelSelect, handleDelete, handleRecover };

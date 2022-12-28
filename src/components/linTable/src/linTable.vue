@@ -36,6 +36,9 @@
 					</template>
 				</el-table-column>
 			</template>
+			<template #empty>
+				<slot name="empty"></slot>
+			</template>
 		</el-table>
 	</div>
 </template>

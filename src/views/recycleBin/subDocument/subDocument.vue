@@ -1,10 +1,6 @@
 <template>
 	<div class="subDocument">
-		<el-empty description="回收站为空" class="empty" v-show="tableData.length === 0">
-			<span style="color: rgb(144, 147, 153)">回收站内容保存10天，到期后自动删除</span>
-		</el-empty>
 		<LinTable
-			v-show="tableData.length !== 0"
 			ref="linTableRef"
 			:tableData="tableData"
 			:columnConfig="columnConfig"
@@ -19,6 +15,13 @@
 			</template>
 			<template #fileSize="scope">
 				<span class="size">{{ fileSizeTransfer(scope.row.fileSize) }}</span>
+			</template>
+			<template #empty>
+				<el-empty description="回收站为空" class="empty">
+					<span style="color: rgb(144, 147, 153)"
+						>回收站内容保存10天，到期后自动删除</span
+					>
+				</el-empty>
 			</template>
 		</LinTable>
 		<transition
@@ -48,7 +51,9 @@ import { fileSizeTransfer } from "@/utils";
 
 import { useTableData } from "./hooks/useTableData";
 
-const { tableData, subDocumentStore, linTableRef, handleSelectionChange } = useTableData();
+const { subDocumentStore, tableData, linTableRef, handleSelectionChange } = useTableData();
+
+// console.log(subDocumentStore.selectedRecycleList.length);
 </script>
 
 <style lang="scss" scoped>

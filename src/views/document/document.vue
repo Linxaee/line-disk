@@ -44,7 +44,7 @@ import { fileSizeTransfer } from "@/utils";
 
 import { useTableData } from "../recycleBin/subAlbum/hooks/useTableData";
 
-const { tableData, documentStore, linTableRef, handleSelectionChange } = useTableData();
+const { documentStore, tableData, linTableRef, handleSelectionChange } = useTableData();
 </script>
 
 <style lang="scss" scoped>

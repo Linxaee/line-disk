@@ -1,6 +1,6 @@
 import { IToolBarConfig, toolBarItem } from "@/components/toolBar/types";
-import { useToolBarClick } from "../../recycleBin/subAlbum/hooks/useToolBarClick";
-const { handleCancelSelect, handleDelete } = useToolBarClick();
+import { useToolBarClick } from "../hooks/useToolBarClick";
+const { handleCancelSelect, handleIntoRecycle } = useToolBarClick();
 export const toolBarConfig: IToolBarConfig = {
 	toolBarItems: [
 		{
@@ -38,8 +38,8 @@ export const toolBarConfig: IToolBarConfig = {
 			icon: "Delete",
 			color: "white",
 			size: 18,
-			tooltipConfig: { content: "删除" },
-			clickCallBack: handleDelete,
+			tooltipConfig: { content: "收入回收站" },
+			clickCallBack: handleIntoRecycle,
 		},
 		{
 			icon: "Remove",

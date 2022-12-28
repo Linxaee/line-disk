@@ -124,7 +124,7 @@ export const fileOutRecycle: uploadingApis["fileOutRecycle"] = (
 };
 
 /**
- * @description 文件收入回收站
+ * @description 文件彻底删除
  * @returns
  */
 export const deleteFile: uploadingApis["deleteFile"] = (

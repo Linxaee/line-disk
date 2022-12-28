@@ -1,6 +1,6 @@
 import appStore from "@/store";
 import LinTable from "@/components/linTable";
-import { onMounted, ref } from "vue";
+import { onMounted, onBeforeMount, ref } from "vue";
 import { getRecycleFileList } from "@/api";
 import { LinFileItem } from "@/api/requests/types";
 
@@ -8,7 +8,7 @@ export function useTableData() {
 	// 取到table实例对象,
 	const linTableRef = ref<InstanceType<typeof LinTable>>();
 	// 取出documentStore
-	const subDocumentStore = appStore.subDocumentStore;
+	const documentStore = appStore.documentStore;
 	// table数据来源
 	let tableData = ref<LinFileItem[]>([]);
 
@@ -17,25 +17,22 @@ export function useTableData() {
 	 * @param files 被选择的文件
 	 */
 	const handleSelectionChange = (files: LinFileItem[]) => {
-		subDocumentStore.selectedRecycleList = files;
+		documentStore.selectedFileList = files;
 	};
 
 	// mounted时ref(table实例对象)才有值，才能进行赋值
-	onMounted(async () => {
+	onBeforeMount(async () => {
 		// 将linTable上的清除选项方法存入store中
-		subDocumentStore.clearSelectedFileList = linTableRef.value?.clearSelection as any;
+		documentStore.clearSelectedFileList = linTableRef.value?.clearSelection as any;
 		// 获取现有文件列表
 		const data = await getRecycleFileList();
 		// 现有文件列表存入store
-		console.log("重新请求了");
-
-		subDocumentStore.recycleFileList = (data as any).fileList;
-		// subDocumentStore.selectedRecycleList = [];
-		console.log((data as any).fileList, subDocumentStore.selectedRecycleList);
+		documentStore.selectedFileList = (data as any).fileList;
+		console.log((data as any).fileList, documentStore.selectedFileList.length);
 
 		// 现有文件列表存入tableData
 		tableData.value = (data as any).fileList;
 	});
 
-	return { subDocumentStore, tableData, linTableRef, handleSelectionChange };
+	return { documentStore, tableData, linTableRef, handleSelectionChange };
 }
