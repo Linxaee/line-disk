@@ -1,39 +1,20 @@
 import { IToolBarConfig } from "@/components/toolBar/types";
 import { useToolBarClick } from "../hooks/useToolBarClick";
-const { handleCancelSelect, handleDelete } = useToolBarClick();
+const { handleCancelSelect, handleDelete, handleRecover } = useToolBarClick();
 export const toolBarConfig: IToolBarConfig = {
 	toolBarItems: [
 		{
-			icon: "Download",
+			icon: "Refresh",
 			color: "white",
 			size: 18,
 			tooltipConfig: {
-				content: "下载",
+				content: "恢复",
 				effect: "dark",
 				placement: "top",
 			},
-			clickCallBack(item) {
-				console.log(item);
-			},
+			clickCallBack: handleRecover,
 		},
-		{
-			icon: "Link",
-			color: "white",
-			size: 18,
-			tooltipConfig: { content: "分享" },
-			clickCallBack(item) {
-				console.log(item);
-			},
-		},
-		{
-			icon: "Star",
-			color: "white",
-			size: 18,
-			tooltipConfig: { content: "收藏" },
-			clickCallBack(item) {
-				console.log(item);
-			},
-		},
+
 		{
 			icon: "Delete",
 			color: "white",

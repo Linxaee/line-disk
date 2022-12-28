@@ -108,6 +108,22 @@ export const fileIntoRecycle: uploadingApis["fileIntoRecycle"] = (
 };
 
 /**
+ * @description 文件移出回收站
+ * @returns
+ */
+export const fileOutRecycle: uploadingApis["fileOutRecycle"] = (
+	idList: number[],
+	headers?: Record<string, any>
+) => {
+	return LinRequest.request({
+		url: "/files/fileOutRecycle",
+		method: "post",
+		headers,
+		params: { idList },
+	});
+};
+
+/**
  * @description 文件收入回收站
  * @returns
  */

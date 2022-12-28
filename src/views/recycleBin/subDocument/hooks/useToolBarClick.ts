@@ -1,4 +1,4 @@
-import { deleteFile } from "@/api";
+import { deleteFile, fileOutRecycle } from "@/api";
 import appStore from "@/store";
 const indexStore = appStore.indexStore;
 export function useToolBarClick() {
@@ -37,5 +37,31 @@ export function useToolBarClick() {
 			indexStore.reloadApp();
 		});
 	};
-	return { handleCancelSelect, handleDelete };
+
+	const handleRecover = async () => {
+		ElMessageBox.confirm("是否恢复文件？", "恢复文件", {
+			confirmButtonText: "恢复",
+			cancelButtonText: "取消",
+			type: "warning",
+		}).then(async () => {
+			const idList: number[] = [];
+			subDocumentStore.selectedRecycleList.forEach((item) => {
+				idList.push(item.fileId);
+			});
+			const res = await fileOutRecycle(idList);
+			if (res.code === 0) {
+				ElMessage({
+					type: "success",
+					message: res.message,
+				});
+			} else {
+				ElMessage({
+					type: "error",
+					message: res.message,
+				});
+			}
+			indexStore.reloadApp();
+		});
+	};
+	return { handleCancelSelect, handleDelete, handleRecover };
 }
