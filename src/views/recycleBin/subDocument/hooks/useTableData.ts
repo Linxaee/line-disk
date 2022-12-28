@@ -5,7 +5,6 @@ import { getRecycleFileList } from "@/api";
 import { LinFileItem } from "@/api/requests/types";
 
 export function useTableData() {
-	const isEmpty = ref(true);
 	// 取到table实例对象,
 	const linTableRef = ref<InstanceType<typeof LinTable>>();
 	// 取出documentStore
@@ -33,5 +32,5 @@ export function useTableData() {
 		tableData.value = (data as any).fileList;
 	});
 
-	return { isEmpty, tableData, linTableRef, handleSelectionChange };
+	return { subDocumentStore, tableData, linTableRef, handleSelectionChange };
 }

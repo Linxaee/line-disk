@@ -79,3 +79,46 @@ export const getFileList: uploadingApis["getFileList"] = () => {
 		method: "get",
 	});
 };
+
+/**
+ * @description 获取回收站文件列表
+ * @returns
+ */
+export const getRecycleFileList: uploadingApis["getRecycleFileList"] = () => {
+	return LinRequest.request({
+		url: "/files/getRecycleFileList",
+		method: "get",
+	});
+};
+
+/**
+ * @description 文件收入回收站
+ * @returns
+ */
+export const fileIntoRecycle: uploadingApis["fileIntoRecycle"] = (
+	idList: number[],
+	headers?: Record<string, any>
+) => {
+	return LinRequest.request({
+		url: "/files/fileIntoRecycle",
+		method: "post",
+		headers,
+		params: { idList },
+	});
+};
+
+/**
+ * @description 文件收入回收站
+ * @returns
+ */
+export const deleteFile: uploadingApis["deleteFile"] = (
+	idList: number[],
+	headers?: Record<string, any>
+) => {
+	return LinRequest.request({
+		url: "/files/deleteFile",
+		method: "post",
+		headers,
+		params: { idList },
+	});
+};

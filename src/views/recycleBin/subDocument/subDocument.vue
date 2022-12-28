@@ -1,10 +1,10 @@
 <template>
 	<div class="subDocument">
-		<el-empty description="回收站为空" class="empty" v-if="tableData.length === 0">
+		<el-empty description="回收站为空" class="empty" v-show="tableData.length === 0">
 			<span style="color: rgb(144, 147, 153)">回收站内容保存10天，到期后自动删除</span>
 		</el-empty>
 		<LinTable
-			v-else
+			v-show="tableData.length !== 0"
 			ref="linTableRef"
 			:tableData="tableData"
 			:columnConfig="columnConfig"
@@ -21,22 +21,34 @@
 				<span class="size">{{ fileSizeTransfer(scope.row.fileSize) }}</span>
 			</template>
 		</LinTable>
+		<transition
+			name="animate__animated animate__bounce animate__delay"
+			enter-active-class="animate__fadeInUp"
+			leave-active-class="animate__fadeOutDown"
+		>
+			<!-- 有选中的文件时才显示 -->
+			<ToolBar
+				:toolBarConfig="toolBarConfig"
+				v-show="subDocumentStore.selectedRecycleList.length"
+				class="toolBar"
+			></ToolBar>
+		</transition>
 	</div>
 </template>
 
 <script setup lang="ts">
 import LinTable from "@/components/linTable";
-// import ToolBar from "@/components/toolBar";
+import ToolBar from "@/components/toolBar";
 
 import { columnConfig } from "./config/columnItems.config";
 import { tableConfig } from "./config/table.config";
-// import { toolBarConfig } from "./config/toolBar.config";
+import { toolBarConfig } from "./config/toolBar.config";
 
 import { fileSizeTransfer } from "@/utils";
 
 import { useTableData } from "./hooks/useTableData";
 
-const { tableData, linTableRef, handleSelectionChange } = useTableData();
+const { tableData, subDocumentStore, linTableRef, handleSelectionChange } = useTableData();
 </script>
 
 <style lang="scss" scoped>

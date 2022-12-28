@@ -9,7 +9,14 @@ export interface LinInterceptors<T = AxiosResponse> {
 export interface LinReqConfig<T = AxiosResponse> extends AxiosRequestConfig {
 	interceptors?: LinInterceptors<T>;
 }
-
+/**
+ * @interface response类型
+ */
+export interface LinResponse {
+	// 0成功 1失败
+	code: number;
+	message: string;
+}
 /**
  * @type 文件类型，1为文件夹，2为普通文件
  */

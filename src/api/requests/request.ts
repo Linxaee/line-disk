@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { AxiosInstance } from "axios";
-import type { LinReqConfig, LinInterceptors } from "./types";
+import type { LinReqConfig, LinInterceptors, LinResponse } from "./types";
 class Request {
 	// 多个request对象保留实例
 	instance: AxiosInstance;
@@ -49,7 +49,7 @@ class Request {
 	 * @param config:LinReqConfig<T>
 	 * @returns Promise<T>
 	 */
-	request<T>(config: LinReqConfig<T>): Promise<T> {
+	request<T = LinResponse>(config: LinReqConfig<T>): Promise<T> {
 		// 请求应当返回promise对象，可使用then/await等进行后续处理
 		return new Promise((resolve, reject) => {
 			if (config.interceptors?.reqInterceptor) {

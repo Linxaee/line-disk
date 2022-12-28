@@ -1,5 +1,5 @@
-import { IToolBarConfig, toolBarItem } from "@/components/toolBar/types";
-import { useToolBarClick } from "../../recycleBin/subAlbum/hooks/useToolBarClick";
+import { IToolBarConfig } from "@/components/toolBar/types";
+import { useToolBarClick } from "../hooks/useToolBarClick";
 const { handleCancelSelect, handleDelete } = useToolBarClick();
 export const toolBarConfig: IToolBarConfig = {
 	toolBarItems: [

@@ -1,3 +1,4 @@
+import { LinResponse } from "../requests/types";
 /**
  * @description 文件状态
  */
@@ -36,13 +37,13 @@ export interface uploadingApis {
 		suffix: string,
 		headers?: Record<string, any>,
 		options?: Record<string, any>
-	) => Promise<unknown>;
+	) => Promise<LinResponse>;
 	// 上传切片
 	uploadChunks: (
 		formData: FormData,
 		headers?: Record<string, any>,
 		options?: Record<string, any>
-	) => Promise<unknown>;
+	) => Promise<LinResponse>;
 	// 合并文件
 	uploadMerge: (
 		count: number,
@@ -50,7 +51,13 @@ export interface uploadingApis {
 		fileInfo: FileInfo,
 		headers?: Record<string, any>,
 		options?: Record<string, any>
-	) => Promise<unknown>;
+	) => Promise<LinResponse>;
 	// 获取文件列表
-	getFileList: () => Promise<unknown>;
+	getFileList: () => Promise<LinResponse>;
+	// 获取文件列表
+	getRecycleFileList: () => Promise<LinResponse>;
+	// 文件送入回收站
+	fileIntoRecycle: (idList: number[], headers?: Record<string, any>) => Promise<LinResponse>;
+	// 彻底删除文件
+	deleteFile: (idList: number[], headers?: Record<string, any>) => Promise<LinResponse>;
 }
