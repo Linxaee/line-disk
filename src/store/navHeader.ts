@@ -43,6 +43,7 @@ export const useNavHeaderStore = defineStore(
 				{
 					// 自定义存储的 key，默认是 store.$id
 					key: "activeSubMenu",
+					paths: ["activeSubMenu", "breadcrumbs"],
 				},
 			],
 		},

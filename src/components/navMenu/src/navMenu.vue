@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import { menuConfig } from "./config/menuConfig";
 import { menuItem } from "./types";
-import { useWatchRoute } from "./hooks/useWatchRoute";
+import { useMenuChange } from "./hooks/useMenuChange";
 
 const menuItems = menuConfig.menuItems;
 
@@ -45,7 +45,7 @@ const emit = defineEmits<{
 	(event: "menuChange", item: menuItem): void;
 }>();
 
-const { activeMenu, handleMenuChange } = useWatchRoute(menuItems, emit);
+const { activeMenu, handleMenuChange } = useMenuChange(menuItems, emit);
 </script>
 
 <style lang="scss" scoped>
