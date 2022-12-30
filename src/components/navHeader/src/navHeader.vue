@@ -1,7 +1,9 @@
 <template>
 	<header class="navHeader">
 		<div class="pageTitle">
-			<div class="title">{{ activeMenu.title }}</div>
+			<div class="title">
+				<LinBreadcrumb :breadcrumbs="breadcrumbs" separator=">"></LinBreadcrumb>
+			</div>
 			<ul class="tabs" v-if="activeMenu.children">
 				<template v-for="subMenu in activeMenu.children" :key="subMenu.title">
 					<li
@@ -36,10 +38,10 @@
 
 <script setup lang="ts">
 import LinDropDown from "@/components/linDropDown";
-
+import LinBreadcrumb, { IBreadcrumb } from "@/components/breadcrumb";
 import { menuItem, subMenuItem } from "@/components/navMenu";
 
-import { dropDownConfig } from "./config/dropDowm.config";
+import { dropDownConfig } from "./config/dropDown.config";
 
 import router from "@/router";
 import appStore from "@/store";
@@ -61,6 +63,8 @@ const handleSubMenuChange = (activeSubMenu: subMenuItem) => {
 	navHeaderStore.changeActiveSubMenu(activeSubMenu);
 	router.push(activeSubMenu.path);
 };
+
+const breadcrumbs = navHeaderStore.breadcrumbs;
 </script>
 
 <style lang="scss" scoped>
