@@ -8,3 +8,4 @@ const LinRequest = new Request({
 
 export default LinRequest;
 export * from "./uploading";
+export * from "./files";

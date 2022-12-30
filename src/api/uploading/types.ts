@@ -28,7 +28,7 @@ export interface FileInfo {
 	fileStatus: FileStatus;
 }
 /**
- * @interface 跟文件操作有关的后台接口
+ * @interface 跟上传操作有关的后台接口
  */
 export interface uploadingApis {
 	// 获取已上传的切片
@@ -52,16 +52,4 @@ export interface uploadingApis {
 		headers?: Record<string, any>,
 		options?: Record<string, any>
 	) => Promise<LinResponse>;
-	// 获取文件列表
-	getFileList: () => Promise<LinResponse>;
-	// 获取文件列表
-	getRecycleFileList: () => Promise<LinResponse>;
-	// 创建文件夹
-	createFolder: (foldername: string) => Promise<LinResponse>;
-	// 文件送入回收站
-	fileIntoRecycle: (idList: number[], headers?: Record<string, any>) => Promise<LinResponse>;
-	// 文件移出回收站
-	fileOutRecycle: (idList: number[], headers?: Record<string, any>) => Promise<LinResponse>;
-	// 彻底删除文件
-	deleteFile: (idList: number[], headers?: Record<string, any>) => Promise<LinResponse>;
 }
