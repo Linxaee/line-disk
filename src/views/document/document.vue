@@ -2,19 +2,20 @@
 	<div class="document">
 		<LinTable
 			ref="linTableRef"
-			:tableData="tableData"
+			:tableData="documentStore.displayedFileList"
 			:columnConfig="columnConfig"
 			:tableConfig="tableConfig"
 			@selectionChange="handleSelectionChange"
+			@rowDbClick="handleRowDbClick"
 		>
 			<!-- createTime插槽添加v-format-time指令 -->
 			<template #createTime="scope">
-				<span class="name" v-format-time="'YYYY-MM-DD HH:MM'">{{
-					scope.row.createTime
-				}}</span>
+				<span>{{ scope.row.createTime }}</span>
 			</template>
 			<template #fileSize="scope">
-				<span class="size">{{ fileSizeTransfer(scope.row.fileSize) }}</span>
+				<span class="size">{{
+					scope.row.fileType === 2 ? fileSizeTransfer(scope.row.fileSize) : ""
+				}}</span>
 			</template>
 		</LinTable>
 		<transition
@@ -43,8 +44,10 @@ import { toolBarConfig } from "./config/toolBar.config";
 import { fileSizeTransfer } from "@/utils";
 
 import { useTableData } from "./hooks/useTableData";
+import { useRowClick } from "./hooks/useRowClick";
 
-const { documentStore, tableData, linTableRef, handleSelectionChange } = useTableData();
+const { documentStore, linTableRef, handleSelectionChange } = useTableData();
+const { handleRowDbClick } = useRowClick();
 </script>
 
 <style lang="scss" scoped>

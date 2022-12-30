@@ -6,6 +6,7 @@
 			:data="tableData"
 			style="width: 100%; height: inherit"
 			@selection-change="handleSelectionChange"
+			@row-dblclick="handleRowDbClick"
 		>
 			<el-table-column type="selection" width="30" v-if="showSelection" />
 			<!-- 遍历传入的列配置 -->
@@ -68,6 +69,7 @@ withDefaults(
 
 const emit = defineEmits<{
 	(e: "selectionChange", files: LinFileItem[]): void;
+	(e: "rowDbClick", row: any, column: any, event: any): void;
 }>();
 
 /**
@@ -78,6 +80,12 @@ const handleSelectionChange = (files: LinFileItem[]) => {
 		"selectionChange",
 		files.map((file) => toRaw(file))
 	);
+};
+/**
+ * @description 发送某行双击事件
+ */
+const handleRowDbClick = (row: any, column: any, event: any) => {
+	emit("rowDbClick", row, column, event);
 };
 /**
  * @description 清除所有选项的函数
