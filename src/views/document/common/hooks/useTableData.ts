@@ -1,6 +1,6 @@
 import appStore from "@/store";
 import LinTable from "@/components/linTable";
-import { onMounted, onBeforeMount, onBeforeUnmount, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 import { getFileList } from "@/api";
 import { LinFileItem } from "@/api/requests/types";
 
@@ -9,8 +9,6 @@ export function useTableData() {
 	const linTableRef = ref<InstanceType<typeof LinTable>>();
 	// 取出documentStore
 	const documentStore = appStore.documentStore;
-	// table数据来源
-	let tableData = ref<LinFileItem[]>([]);
 
 	/**
 	 * @description 选择数组改变后储存到store中
@@ -28,8 +26,6 @@ export function useTableData() {
 		const data = await getFileList();
 		// 现有文件列表存入store
 		documentStore.displayedFileList = (data as any).fileList;
-		// 现有文件列表存入tableData
-		tableData.value = (data as any).fileList;
 	});
 
 	onBeforeUnmount(() => {
@@ -37,5 +33,5 @@ export function useTableData() {
 		documentStore.selectedFileList = [];
 	});
 
-	return { documentStore, tableData, linTableRef, handleSelectionChange };
+	return { documentStore, linTableRef, handleSelectionChange };
 }

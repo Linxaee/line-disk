@@ -109,8 +109,11 @@ const upload = async (rawFile: UploadRawFile, HASH?: string, suffix?: string) =>
 	if (!cut) {
 		const data = await uploadSingle(rawFile);
 	} else {
+		const navHeaderStore = appStore.navHeaderStore;
+		// 获取当前所在的文件夹id（为0则不在任何文件夹)
+		const folderId = navHeaderStore.folderId;
 		// 获取已经上传成功的chunks
-		const { isComplete, fileList } = await getAlready(HASH!, suffix!);
+		const { isComplete, fileList } = await getAlready(HASH!, suffix!, folderId);
 		// 若已存在则秒传
 		if (isComplete) {
 			uploadChunk(true, [], [], rawFile, "");
@@ -121,7 +124,8 @@ const upload = async (rawFile: UploadRawFile, HASH?: string, suffix?: string) =>
 		// 切片好的chunks
 		const chunks = await sliceFile(HASH!, suffix!, rawFile);
 		// 上传chunks
-		const data = await uploadChunk(false, chunks, alreadyList, rawFile, HASH!);
+
+		const data = await uploadChunk(false, chunks, alreadyList, rawFile, HASH!, folderId);
 
 		// console.log(buffer, HASH, suffix, filename);
 	}

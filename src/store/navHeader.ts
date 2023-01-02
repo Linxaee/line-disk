@@ -13,6 +13,10 @@ export const useNavHeaderStore = defineStore(
 		const firstMenu = ref(menuConfig.menuItems[0]);
 		// 面包屑数组
 		const breadcrumbs = ref([firstMenu.value]);
+		// 当前路由是否是文件夹数组
+		const isFolder = ref(true);
+		// 若是文件夹则id为
+		const folderId = ref(0);
 		// 第一个二级菜单项
 		const firstSubMenu = ref(null as subMenuItem | null);
 		// 当前激活菜单项(默认第一个)
@@ -28,6 +32,8 @@ export const useNavHeaderStore = defineStore(
 			activeSubMenu.value = menu;
 		}
 		return {
+			isFolder,
+			folderId,
 			firstSubMenu,
 			activeSubMenu,
 			breadcrumbs,
@@ -43,7 +49,7 @@ export const useNavHeaderStore = defineStore(
 				{
 					// 自定义存储的 key，默认是 store.$id
 					key: "activeSubMenu",
-					paths: ["activeSubMenu", "breadcrumbs"],
+					paths: ["activeSubMenu"],
 				},
 			],
 		},

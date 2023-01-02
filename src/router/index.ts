@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
-	{ path: "/", redirect: "/driver/document" },
+	{ path: "/", redirect: "/driver/document/common" },
 	{
 		path: "/driver",
 		name: "driver",
@@ -13,6 +13,20 @@ const routes: RouteRecordRaw[] = [
 				path: "document",
 				name: "document",
 				component: () => import("@/views/document/document.vue"),
+				redirect: "/driver/document/common",
+				children: [
+					{
+						path: "common",
+						name: "common",
+						component: () => import("@/views/document/common/common.vue"),
+					},
+					{
+						path: "folder/:folderId",
+						name: "folder",
+						meta: { isFolder: true },
+						component: () => import("@/views/document/folder/folder.vue"),
+					},
+				],
 			},
 			{
 				path: "album",

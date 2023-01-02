@@ -38,7 +38,8 @@ export function useItemClick() {
 			}
 		)
 			.then(async ({ value }) => {
-				const data = await createFolder(value);
+				const navHeaderStore = appStore.navHeaderStore;
+				const data = await createFolder(value, navHeaderStore.folderId);
 				ElMessage({
 					type: "success",
 					message: "新建文件夹成功",

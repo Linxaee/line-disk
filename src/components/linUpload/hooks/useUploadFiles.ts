@@ -8,6 +8,7 @@ import appStore from "@/store";
 import { UploadFile } from "../types/index";
 import { throttle } from "@/utils";
 import { getAlreadyChunks, uploadChunks, uploadMerge, FileInfo, FileType, FileStatus } from "@/api";
+import { useRoute } from "vue-router";
 
 /**
  * @TODO 添加异常处理
@@ -117,8 +118,8 @@ export function useFileUpload(props: UploadContentProps) {
 	 * @param suffix 文件后缀
 	 * @returns
 	 */
-	async function getAlready(HASH: string, suffix: string) {
-		const data = await getAlreadyChunks(HASH, suffix, headers);
+	async function getAlready(HASH: string, suffix: string, folderId: number) {
+		const data = await getAlreadyChunks(HASH, suffix, folderId, headers);
 
 		const { isComplete } = data as any;
 		if (isComplete) return { isComplete };
@@ -159,7 +160,12 @@ export function useFileUpload(props: UploadContentProps) {
 		}
 		return chunks;
 	}
-	async function complete(uploadFile: UploadFile, file: UploadRawFile, HASH: string) {
+	async function complete(
+		uploadFile: UploadFile,
+		file: UploadRawFile,
+		HASH: string,
+		folderId?: number
+	) {
 		// 每完成一个请求，已完成数（completeCount）+++
 		uploadFile.completeCount++;
 		// 调用onProgress回调进度管控
@@ -180,7 +186,13 @@ export function useFileUpload(props: UploadContentProps) {
 			fileStatus: FileStatus["common"],
 		};
 		// 获取文件合并结果
-		const data = await uploadMerge(uploadFile.completeCount, HASH, fileInfo, headers);
+		const data = await uploadMerge(
+			uploadFile.completeCount,
+			HASH,
+			fileInfo,
+			folderId!,
+			headers
+		);
 		if ((data as any).code === 0) onSuccess!(data, file);
 		else onError!(data as any, file);
 	}
@@ -189,7 +201,8 @@ export function useFileUpload(props: UploadContentProps) {
 		chunks: any,
 		already: any,
 		rawFile: UploadRawFile,
-		HASH: string
+		HASH: string,
+		folderId?: number
 	) {
 		// 若已存在则秒传
 		if (isComplete) {
@@ -213,14 +226,14 @@ export function useFileUpload(props: UploadContentProps) {
 
 			try {
 				// 跟去chunk的filename将上传chunk的请求装入requests对象
-				const request = uploadChunks(formData, headers);
+				const request = uploadChunks(formData, headers, folderId);
 				requests[chunk.filename] = request;
 				// 将chunk上传成功的回调设置为complete,失败的回调设置为onError
 				if (request instanceof Promise) {
 					return request.then(
 						() => {
 							delete requests[chunk.filename];
-							complete(uploadFile, rawFile, HASH);
+							complete(uploadFile, rawFile, HASH, folderId);
 						},
 						(err) => {
 							delete requests[chunk.filename];

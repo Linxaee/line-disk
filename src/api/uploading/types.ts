@@ -35,6 +35,7 @@ export interface uploadingApis {
 	getAlreadyChunks: (
 		HASH: string,
 		suffix: string,
+		folderId?: number,
 		headers?: Record<string, any>,
 		options?: Record<string, any>
 	) => Promise<LinResponse>;
@@ -42,6 +43,7 @@ export interface uploadingApis {
 	uploadChunks: (
 		formData: FormData,
 		headers?: Record<string, any>,
+		folderId?: number,
 		options?: Record<string, any>
 	) => Promise<LinResponse>;
 	// 合并文件
@@ -49,6 +51,7 @@ export interface uploadingApis {
 		count: number,
 		HASH: string,
 		fileInfo: FileInfo,
+		folderId?: number,
 		headers?: Record<string, any>,
 		options?: Record<string, any>
 	) => Promise<LinResponse>;

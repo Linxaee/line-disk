@@ -11,6 +11,7 @@ export * from "./types";
 export const getAlreadyChunks: uploadingApis["getAlreadyChunks"] = (
 	HASH: string,
 	suffix: string,
+	folderId?: number,
 	headers?: Record<string, any>,
 	options?: Record<string, any>
 ) => {
@@ -21,6 +22,7 @@ export const getAlreadyChunks: uploadingApis["getAlreadyChunks"] = (
 		params: {
 			HASH,
 			suffix,
+			folderId,
 		},
 		...options,
 	});
@@ -35,6 +37,7 @@ export const getAlreadyChunks: uploadingApis["getAlreadyChunks"] = (
 export const uploadChunks: uploadingApis["uploadChunks"] = (
 	formData: FormData,
 	headers?: Record<string, any>,
+	folderId?: number,
 	options?: Record<string, any>
 ) => {
 	return LinRequest.request({
@@ -42,6 +45,7 @@ export const uploadChunks: uploadingApis["uploadChunks"] = (
 		method: "post",
 		headers: headers,
 		data: formData,
+		params: { folderId },
 		...options,
 	});
 };
@@ -57,6 +61,7 @@ export const uploadMerge: uploadingApis["uploadMerge"] = (
 	count: number,
 	HASH: string,
 	fileInfo: FileInfo,
+	folderId?: number,
 	headers?: Record<string, any>,
 	options?: Record<string, any>
 ) => {
@@ -64,7 +69,8 @@ export const uploadMerge: uploadingApis["uploadMerge"] = (
 		url: "/files/uploadMerge",
 		method: "post",
 		headers: headers,
-		data: { count, HASH, ...fileInfo },
+		data: { count, HASH, ...fileInfo, folderId },
+		params: { folderId },
 		...options,
 	});
 };

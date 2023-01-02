@@ -10,7 +10,7 @@ export interface filesApis {
 	// 获取文件列表
 	getRecycleFileList: () => Promise<LinResponse>;
 	// 创建文件夹
-	createFolder: (foldername: string) => Promise<LinResponse>;
+	createFolder: (foldername: string, folderId: number) => Promise<LinResponse>;
 	// 文件送入回收站
 	fileIntoRecycle: (idList: number[], headers?: Record<string, any>) => Promise<LinResponse>;
 	// 文件移出回收站

@@ -3,6 +3,7 @@ import { UploadFile, UploadFiles, UploadRawFile } from "../types";
 import { UploadContentProps, UploadContentInstance } from "../src/linUploadContent";
 import { getFileId, UploadProps } from "../src/linUpload";
 import { ShallowRef, ref } from "vue";
+import { useRoute } from "vue-router";
 export function useUploadHandler(
 	props: UploadProps,
 	uploadRef: ShallowRef<UploadContentInstance | undefined>

@@ -39,11 +39,11 @@ export const getRecycleFileList: filesApis["getRecycleFileList"] = () => {
  * @description 创建文件夹
  * @returns
  */
-export const createFolder: filesApis["createFolder"] = (foldername: string) => {
+export const createFolder: filesApis["createFolder"] = (foldername: string, folderId: number) => {
 	return LinRequest.request({
 		url: "/files/createFolder",
 		method: "post",
-		params: { foldername },
+		params: { foldername, folderId },
 	});
 };
 

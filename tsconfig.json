@@ -27,5 +27,6 @@
 		"src/**/*.vue",
 		"auto-imports.d.ts"
 	],
+	"exclude": ["components.d.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
