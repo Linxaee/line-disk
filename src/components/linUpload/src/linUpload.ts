@@ -1,9 +1,6 @@
 import { InferDefaults } from "@/utils";
 import { UploadCallBacks, UploadFile, UploadFiles } from "../types";
-import { AxiosProgressEvent } from "axios";
 import { NOOP } from "@/global";
-import { Store } from "pinia";
-import { Ref } from "vue";
 import { UploadRawFile } from "../types/index";
 // 文件id
 let fileId = 1;
@@ -20,6 +17,7 @@ export interface UploadBaseProps {
 	url?: string;
 	method?: string;
 	multiple?: boolean;
+	webkitdirectory?: boolean;
 	accept?: string;
 	limit?: number;
 	cut?: boolean;
@@ -32,6 +30,7 @@ export const UploadBasePropsDefault: InferDefaults<UploadBaseProps> = {
 	url: "#",
 	method: "post",
 	multiple: true,
+	webkitdirectory: false,
 	accept: "",
 	limit: 3,
 	cut: false,

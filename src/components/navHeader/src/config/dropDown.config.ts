@@ -57,6 +57,42 @@ export const dropDownConfig: IDropDownConfig = {
 			icon: "FolderAdd",
 			context: "上传文件夹",
 			type: 1,
+			uploaded: true,
+			uploadConfig: {
+				limit: 100,
+				cut: true,
+				webkitdirectory: true,
+				onBeforeHash(file) {
+					appStore.uploadStore.addFile({ isPause: false, ...file });
+				},
+				onStart(file, HASH, suffix) {
+					const uploadFile = appStore.uploadStore.getFile(file.uid);
+					uploadFile.HASH = HASH;
+					uploadFile.suffix = suffix;
+				},
+				onProgress: (evt, file) => {
+					const curFile = appStore.uploadStore.getFile(file.uid);
+					curFile.status = "uploading";
+					curFile.percentage = Math.round(evt.progress! * 100);
+					console.log(`${curFile.name}下了${curFile.percentage}%了`);
+				},
+				onSuccess(response, uploadFile, uploadFiles) {
+					console.log(`${uploadFile.name}下了完了`);
+					ElNotification({
+						type: "success",
+						message: `${uploadFile.name} 已完成传输`,
+						position: "bottom-right",
+						duration: 2000,
+					});
+					setTimeout(() => {
+						appStore.uploadStore.deleteFile(uploadFile.uid);
+					}, 2000);
+
+					// console.log(response);
+					// console.log(uploadFile);
+					// console.log(uploadFiles);
+				},
+			},
 		},
 		{
 			icon: "Folder",

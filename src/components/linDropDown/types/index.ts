@@ -44,6 +44,10 @@ export interface dropDownItem {
 	 */
 	uploaded?: boolean;
 	/**
+	 * @description 是否启用upload
+	 */
+	webkitdirectory?: boolean;
+	/**
 	 * @description upload组件的选项
 	 */
 	uploadConfig?: UploadProps;

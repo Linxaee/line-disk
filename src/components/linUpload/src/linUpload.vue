@@ -20,6 +20,7 @@ const props = withDefaults(
 		url?: string;
 		method?: string;
 		multiple?: boolean;
+		webkitdirectory?: boolean;
 		accept?: string;
 		limit?: number;
 		cut?: boolean;
