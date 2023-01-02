@@ -35,7 +35,7 @@ export function useRowClick() {
 		const navHeaderStore = appStore.navHeaderStore;
 		const crumb = {
 			title: row.fileName,
-			...row,
+			path: `/driver/document/folder/${row.fileId}`,
 		};
 		navHeaderStore.pushCrumb(crumb);
 	};

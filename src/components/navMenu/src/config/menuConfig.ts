@@ -5,7 +5,7 @@ export const menuConfig: IMenuConfig = {
 			id: 1,
 			title: "文件",
 			icon: "Document",
-			path: "/driver/document",
+			path: "/driver/document/common",
 			type: 1,
 		},
 		{

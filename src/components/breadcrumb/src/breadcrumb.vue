@@ -6,8 +6,9 @@
 				:class="isLast(index) ? 'active breadcrumbItem' : 'deActive breadcrumbItem'"
 				:separator="isLast(index) ? '' : separator"
 				:separatorIcon="isLast(index) ? '' : separatorIcon"
-				:to="item.to"
+				:to="item.path"
 				:replace="item.replace ?? false"
+				@itemClick="handleItemClick"
 				><slot>{{ item.title }}</slot></LinBreadcrumbItem
 			>
 		</template>
@@ -17,9 +18,10 @@
 <script lang="ts" setup>
 import { CSSProperties, defineProps } from "vue";
 import LinBreadcrumbItem from "./breadcrumbItem.vue";
+import { IBreadcrumb } from "../types";
 const props = withDefaults(
 	defineProps<{
-		breadcrumbs: any[];
+		breadcrumbs: IBreadcrumb[];
 		separator?: string;
 		separatorIcon?: string;
 		customItemStyle?: CSSProperties;
@@ -29,8 +31,13 @@ const props = withDefaults(
 		separator: "/",
 	}
 );
+const emit = defineEmits(["itemClick"]);
 const isLast = (index: number) => {
 	return index === props.breadcrumbs.length - 1;
+};
+
+const handleItemClick = (path: string) => {
+	emit("itemClick", path);
 };
 </script>
 

@@ -2,7 +2,11 @@
 	<header class="navHeader">
 		<div class="pageTitle">
 			<div class="title">
-				<LinBreadcrumb :breadcrumbs="breadcrumbs" separator=">"></LinBreadcrumb>
+				<LinBreadcrumb
+					:breadcrumbs="navHeaderStore.breadcrumbs"
+					@itemClick="handleItemClick"
+					separator=">"
+				></LinBreadcrumb>
 			</div>
 			<ul class="tabs" v-if="activeMenu.children">
 				<template v-for="subMenu in activeMenu.children" :key="subMenu.title">
@@ -64,7 +68,14 @@ const handleSubMenuChange = (activeSubMenu: subMenuItem) => {
 	router.push(activeSubMenu.path);
 };
 
-const breadcrumbs = navHeaderStore.breadcrumbs;
+/**
+ * @description 面包屑item点击回退
+ * @param activeSubMenu 点击的path
+ */
+const handleItemClick = (path: string) => {
+	const index = navHeaderStore.breadcrumbs.findIndex((item) => item.path === path);
+	navHeaderStore.breadcrumbs.splice(index + 1, navHeaderStore.breadcrumbs.length - index);
+};
 </script>
 
 <style lang="scss" scoped>

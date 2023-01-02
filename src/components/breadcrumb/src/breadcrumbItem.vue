@@ -25,7 +25,7 @@ const props = withDefaults(
 		replace: false,
 	}
 );
-
+const emit = defineEmits(["itemClick"]);
 const router = useRouter();
 
 const link = ref<HTMLSpanElement>();
@@ -33,6 +33,7 @@ const link = ref<HTMLSpanElement>();
 const onClick = () => {
 	if (!props.to || !router) return;
 	props.replace ? router.replace(props.to) : router.push(props.to);
+	emit("itemClick", props.to);
 };
 </script>
 

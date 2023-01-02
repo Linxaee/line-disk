@@ -1,10 +1,12 @@
-import { menuItem } from "@/components/navMenu";
+import NavMenu, { menuItem } from "@/components/navMenu";
 
 import appStore from "@/store";
 import { storeToRefs } from "pinia";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import { watch } from "vue";
+import { pathMapToMenu } from "@/utils";
+import { menuConfig } from "@/components/navMenu";
 
 export function useMenuChange(menuItems: menuItem[], emit?: any) {
 	const route = useRoute();
@@ -29,11 +31,16 @@ export function useMenuChange(menuItems: menuItem[], emit?: any) {
 		() => route,
 		(newRoute) => {
 			// 监听路由是否是文件夹
-			const { folderId } = newRoute.params;
 			const { isFolder } = route.meta;
-			navHeaderStore.isFolder = !!isFolder;
-			navHeaderStore.folderId = isFolder ? parseInt(folderId as string) : 0;
-			// indexStore.reloadApp();
+			if (isFolder) {
+				navHeaderStore.isFolder = !!isFolder;
+				const { folderId } = newRoute.params;
+				navHeaderStore.folderId = isFolder ? parseInt(folderId as string) : 0;
+			} else {
+				const { activeMenu } = pathMapToMenu(menuConfig.menuItems, newRoute.path);
+
+				navHeaderStore.breadcrumbs = [{ title: activeMenu.title, path: activeMenu.path }];
+			}
 		},
 		{
 			immediate: true,
